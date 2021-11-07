@@ -8,7 +8,7 @@ import base64
 import numpy as np
 import pandas as pd
 from flask_socketio import SocketIO,emit
-import time
+import datetime as dt
 app = Flask(__name__)
 sio=SocketIO(app)
 
@@ -27,10 +27,16 @@ def connect():
 #     image=json['image']
 @sio.on("main page socket")
 def vehicle_detection(json):
-    print(json['counts'])
+    counts=json['counts']
     # """detection code here and save into database"""
-    sio.emit('page data detection',json['counts'],broadcast=True)
+    sio.emit('page data detection',counts,broadcast=True)
     sio.emit('frame predict',json['image'],broadcast=True)
+    sio.emit('index data',data={'indexchart':{
+                't':str(dt.datetime.now()),
+                'y':counts['total']
+            },
+            'data':[counts['cartotal'],counts['bustotal'],counts['trucktotal'],counts['rickshawtotal'],counts['biketotal'],counts['vantotal']]
+            },broadcast=True)
 
 @sio.on("frame get")
 def frames(data):
