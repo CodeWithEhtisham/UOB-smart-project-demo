@@ -9,7 +9,7 @@ sio.on('disconnect', () => {
   console.log('disconnected');
 });
 
-sio.on("frame", (data) => {
+sio.on("frame predict", (data) => {
   console.log("frame recieved")
   document.getElementById("frames").src = "data:image/png;base64," + data;
 

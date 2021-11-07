@@ -30,7 +30,7 @@ def vehicle_detection(json):
     print(json['counts'])
     # """detection code here and save into database"""
     sio.emit('page data detection',json['counts'],broadcast=True)
-    # sio.emit('frame',json['image'],broadcast=True)
+    sio.emit('frame predict',json['image'],broadcast=True)
 
 @sio.on("frame get")
 def frames(data):
