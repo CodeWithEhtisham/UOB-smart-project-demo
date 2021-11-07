@@ -137,13 +137,12 @@
           </div>
         </li> -->
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a href="#">
-            <!-- <i class="far fa-bell"></i> -->
             <span class="badge badge-warning navbar-badge"
               style="background-color:rgb(144,210,250); font-size: medium;">History</span>
           </a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
@@ -313,7 +312,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <img style="width: 100%;height: 390px;" id="myImage" ,src='/static/img/output.jpg'>
+                  <img style="width: 100%;height: 100%;" id="frames" ,src='/static/img/output.jpg'>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -347,28 +346,28 @@
                       </tr>
                       <tr>
                         <td>Car</td>
-                        <td><span id="car"></span></td>
+                        <td><span id="cartotal"></span></td>
                       </tr>
                       <tr>
                         <td>bus</td>
-                        <td><span id="bus"></span></td>
+                        <td><span id="bustotal"></span></td>
                       </tr>
                       <tr>
                         <td>truck</td>
-                        <td><span id="truck"></span></td>
+                        <td><span id="trucktotal"></span></td>
                       </tr>
                       <tr>
                         <td>bike</td>
-                        <td><span id="bike"></span></td>
+                        <td><span id="biketotal"></span></td>
                       </tr>
                       <tr>
                         <td>Rikshaw</td>
-                        <td><span id="rikshaw"></span></td>
+                        <td><span id="rickshawtotal"></span></td>
                       </tr>
                       <tr>
                         <tr>
                           <td>Van</td>
-                          <td><span id="van"></span></td>
+                          <td><span id="vantotal"></span></td>
                         </tr>
                         <tr>
                         <td></td>
@@ -417,14 +416,13 @@
   <script src="static/js/demo.js"></script>
   <!-- Page specific script -->
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
 
-    // setInterval(function () {
-     
+  <script src="{{url_for('static', filename='js/sock_predict.js')}}"></script>
 
-    // }, 2500)
+
+  <!-- <script>
     function ShowCurrentTime() {
-                // Ajax call to YOUR_PAGE.aspx/GetCurrentTime
                 var myimageelement = document.getElementById('myImage');
       myimageelement.src = "/static/img/output.jpg?rand=" + Math.random();
                 $.ajax({
@@ -451,109 +449,9 @@
             }
 
             $(function () {
-                // Call every 1000 miliseconds
-// <<<<<<< HEAD
-//                 window.setInterval(ShowCurrentTime, 4000);
-// =======
                 window.setInterval(ShowCurrentTime, 7000);
-// >>>>>>> 5b8cdf8d10fbab90423e46c5fb708c5606a0cc0d
             });
-
-    // function parsedate(y, m, d, h, mi, s) {
-    //   // var d = new Date()
-
-    //   var d = new Date(y, m, d, h, mi, s)
-    //   return d
-
-    // }
-
-    // window.onload = function () {
-    //   var line_plot = []
-    //   var chart = new CanvasJS.Chart("chartContainer", {
-    //     animationEnabled: true,
-    //     title: {
-    //       text: "Traffic"
-    //     },
-    //     // axisX:{
-    //     //   // includeZero: true,
-    //     // 	// valueFormatString: "DD MMM"
-    //     // },
-    //     axisY: {
-    //       includeZero: true,
-    //       title: "Number of Vehicles"
-    //       // scaleBreaks: {
-    //       //   autoCalculate: true
-    //       // }
-    //     },
-    //     data: [{
-    //       type: "spline",
-    //       xValueFormatString: "dd hh mm ss",
-    //       // color: "#3c8dbc",
-    //       dataPoints: line_plot
-    //     }
-    //     ]
-    //   });
-    //   chart.render();
-      // chart.remove();
-      // chart.destroy();
-
-
-      // var updatechart = function (year, m, d, h, mi, s, y, checkflag) {
-      //   if (line_plot.length == 0) {
-      //     checkflag = false
-      //   }
-      //   if (checkflag == false) {
-      //     console.log("false condition")
-      //     console.log(line_plot)
-
-      //     for (let i = 0; i < year.length; i++) {
-      //       line_plot.push({
-      //         x: parsedate(year[i], m[i], d[i], h[i], mi[i], s[i]), y: y[i]
-
-      //       })
-      //     }
-      //   }
-      //   else {
-      //     ln = year.length - 1
-      //     console.log("true condition")
-      //     console.log(line_plot)
-      //     line_plot.push({
-      //       x: parsedate(year[ln], m[ln], d[ln], h[ln], mi[ln], s[ln]), y: y[ln]
-
-      //     })
-
-      //   }
-      //   if (line_plot.length > 15) {
-      //     line_plot.shift();
-      //   }
-      //   // chart.clear();
-      //   chart.render();
-
-      // }
-
-    //   setInterval(function () {
-    //     var myimageelement = document.getElementById('myImage');
-    //     myimageelement.src = "/static/img/output.jpg?rand=" + Math.random();
-    // }
-
-
-    /*
-     * Custom Label formatter
-     * ----------------------
-     */
-    function labelFormatter(label, series) {
-      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-        + label
-        + '<br>'
-        + Math.round(series.percent) + '%</div>'
-    }
-
-
-
-
-
-
-  </script>
+  // </script> -->
 </body>
 
 </html>
