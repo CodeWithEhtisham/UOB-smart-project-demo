@@ -34,7 +34,7 @@ def vehicle_detection(json):
 
 @sio.on("frame get")
 def frames(data):
-    emit("frame",data)
+    sio.emit("frame",data,broadcast=True)
 
 
 
