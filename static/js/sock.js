@@ -304,7 +304,7 @@ sio.on('index data', (data) => {
   for (var i = 0; i < data['data'].length; i++) {
     mulitline_chart.data.datasets[i].data.push(data['data'][i])
   }
-  mulitline_chart.labels.push(data['indexchart']['t'])
+  mulitline_chart.labels.push(data['time'])
   // console.log(data['data'])
   // console.log(barChart.data.datasets.data)
   // console.log(myChart.data.datasets[0].data)

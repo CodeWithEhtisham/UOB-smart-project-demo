@@ -35,7 +35,8 @@ def vehicle_detection(json):
                 't':str(dt.datetime.now()),
                 'y':counts['total']
             },
-            'data':[counts['cartotal'],counts['bustotal'],counts['trucktotal'],counts['rickshawtotal'],counts['biketotal'],counts['vantotal']]
+            'data':[counts['cartotal'],counts['bustotal'],counts['trucktotal'],counts['rickshawtotal'],counts['biketotal'],counts['vantotal']],
+            'time':str(dt.datetime.now())
             },broadcast=True)
 
 @sio.on("frame get")
