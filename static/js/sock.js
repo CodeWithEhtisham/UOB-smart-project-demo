@@ -43,46 +43,47 @@
 
 const multiline = document.getElementById('multipleLineChart').getContext('2d');
 
-const chart = new Chart(multiline, {
+const mulitline_chart = new Chart(multiline, {
   type: 'line',
   data: {
     labels: [
-      moment(new Date(2020, 2, 1)).format('YYYY-MM-DD'),
-      moment(new Date(2020, 2, 2)).format('YYYY-MM-DD'),
-      moment(new Date(2020, 2, 3)).format('YYYY-MM-DD')
+      // moment(new Date(2020, 2, 1)).format('YYYY-MM-DD'),
+      // moment(new Date(2020, 2, 2)).format('YYYY-MM-DD'),
+      // moment(new Date(2020, 2, 3)).format('YYYY-MM-DD')
     ],
+    // ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"]
     datasets: [{
         label: 'Car',
-        data: [12, 18, 22],
+        data: [],
         borderWidth: 1,
         fill: false,
         borderColor: 'red'
       },
       {
         label: 'Bus',
-        data: [12, 2, 13],
+        data: [],
         borderWidth: 1,
         fill: false,
         borderColor: 'green'
+      },
+      {
+        label: 'truck',
+        data: [],
+        borderWidth: 1,
+        fill: false,
+        borderColor: 'pink'
       }
       ,
       {
         label: 'Rickshaw',
-        data: [13, 4, 17],
+        data: [],
         borderWidth: 1,
         fill: false,
         borderColor: 'blue'
       },
       {
-        label: 'truck',
-        data: [0,1,0],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'pink'
-      },
-      {
         label: 'Bike',
-        data: [4,6,10],
+        data: [],
         borderWidth: 1,
         fill: false,
         borderColor: 'black'
@@ -90,7 +91,7 @@ const chart = new Chart(multiline, {
       ,
       {
         label: 'van',
-        data: [0,0,1],
+        data: [],
         borderWidth: 1,
         fill: false,
         borderColor: 'yellow'
@@ -299,10 +300,16 @@ sio.on('index data', (data) => {
   myChart.data.datasets[0].data.push(data['indexchart'])
   pieChart.data.datasets[0].data=data['data']
   barChart.data.datasets[0].data=data['data']
+
+  for (var i = 0; i < data['data'].length; i++) {
+    mulitline_chart.data.datasets[i].data.push(data['data'][i])
+  }
+  mulitline_chart.labels.push(data['indexchart']['t'])
   // console.log(data['data'])
   // console.log(barChart.data.datasets.data)
   // console.log(myChart.data.datasets[0].data)
   myChart.update()
   barChart.update()
   pieChart.update()
+  mulitline_chart.update()
 });

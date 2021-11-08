@@ -14,17 +14,17 @@ import cv2
 import base64
 sio = socketio.Client()
 print("client activated")
-net=cv2.dnn_DetectionModel(r"E:\gil\demo\yolov3\yolov4.cfg",r"E:\gil\demo\yolov3\yolov4.weights")
+net=cv2.dnn_DetectionModel(r"D:\gil\demo\yolov4\yolov4.cfg",r"D:\gil\demo\yolov4\yolov4.weights")
 net.setInputSize(608,608)
 net.setInputScale(1.0/255)
 net.setInputSwapRB(True)
 # frame=cv2.imread(r"download.jpg")
 
-with open(r'E:\gil\demo\yolov3\obj.names','rt') as f:
+with open(r'D:\gil\demo\yolov4\obj.names','rt') as f:
     names=f.read().rstrip('\n').split('\n')
 fpsLimit = 1 # throttle limit
 startTime = time.time()
-cap = cv2.VideoCapture("E:\gil\demo\yolov3\road.mp4")
+cap = cv2.VideoCapture(r"D:\gil\demo\yolov4\road.mp4")
 print("cap s")
 @sio.event
 def connect():
@@ -138,12 +138,15 @@ cv2.destroyAllWindows()
 @sio.event
 def disconnect():
     print('disconnected from server')
-<<<<<<< HEAD
-sio.connect("http://192.168.18.253:8000")
+# <<<<<<< HEAD
+# sio.connect("http://192.168.18.253:8000")
 # sio.connect('http://127.0.0.1:8000')
-=======
+# =======
 print("connecting........")
-sio.connect('http://192.168.18.253:4000')
->>>>>>> d1e05e5f6bdef23c15eb2e2f4781c410d9f99712
+sio.connect('http://192.168.18.34:8000')
+
+# sio.connect('http://192.168.132.40:8000')
+# sio.connect('http://192.168.18.253:4000')
+# >>>>>>> d1e05e5f6bdef23c15eb2e2f4781c410d9f99712
 # sio.connect('http://143.110.179.46:4444')
 sio.wait()
