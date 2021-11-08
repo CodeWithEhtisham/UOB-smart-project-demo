@@ -99,10 +99,11 @@ const mulitline_chart = new Chart(multiline, {
     ]
   },
   options: {
+    
     scales: {
       yAxes: [{
-        ticks: {
-          beginAtZero: true
+      	ticks: {
+        	beginAtZero: true
         }
       }]
     }
@@ -164,6 +165,16 @@ var myChart = new Chart(index, {
       ],
       borderWidth: 1
     }]
+  },
+  options: {
+    
+    scales: {
+      yAxes: [{
+      	ticks: {
+        	beginAtZero: true
+        }
+      }]
+    }
   }
   // options: {
     
@@ -304,7 +315,7 @@ sio.on('index data', (data) => {
   for (var i = 0; i < data['data'].length; i++) {
     mulitline_chart.data.datasets[i].data.push(data['data'][i])
   }
-  mulitline_chart.labels.push(data['time'])
+  mulitline_chart.data.labels.push(data['time'])
   // console.log(data['data'])
   // console.log(barChart.data.datasets.data)
   // console.log(myChart.data.datasets[0].data)
