@@ -22,7 +22,7 @@ async def insert_something(db: Database,data):
         async with db.transaction():
             await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(:camera_id,:camera_loc,:capture_time,:image_path)",data)
             # await db.execute("insert into person (name) values (:name)", {"name": "testing..."})
-            print("last row id :",db.cursor.lastrowid)
+            print(db.execute("SELECT * FROM data ORDER BY frame_id DESC LIMIT 1"))
 
 
 async def query_something(db: Database, n):
