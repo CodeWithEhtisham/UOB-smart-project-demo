@@ -106,6 +106,7 @@ def connect():
             print(frame)
             obj={
                 "image":frame,
+                "image_path":datetime.datetime.now().__str__()+'_uob.jpg',
                 # "tag":tag,
                 "datetime":datetime.datetime.now().__str__(),
                 "camera_id":"12345",

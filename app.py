@@ -78,7 +78,7 @@ def vehicle_detection(json):
     asyncio.run({
         "camera_id":json['camera_id'],
         "camera_loc":json['camera_loc'],
-        "capture_time":json['capture_time'],
+        "capture_time":json['datetime'],
         "image_path":json['image_path']
     })
     counts=json['counts']
