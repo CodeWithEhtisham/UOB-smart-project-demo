@@ -47,14 +47,17 @@ const mulitline_chart = new Chart(multiline, {
   type: 'line',
   data: {
     labels: [
-      // moment(new Date(2020, 2, 1)).format('YYYY-MM-DD'),
-      // moment(new Date(2020, 2, 2)).format('YYYY-MM-DD'),
-      // moment(new Date(2020, 2, 3)).format('YYYY-MM-DD')
+      moment(new Date(2021, 11, 1)).format('YYYY-MM-DD'),
+      moment(new Date(2021, 11, 2)).format('YYYY-MM-DD'),
+      moment(new Date(2021, 11, 3)).format('YYYY-MM-DD'),
+      moment(new Date(2021, 11, 4)).format('YYYY-MM-DD'),
+      moment(new Date(2021, 11, 5)).format('YYYY-MM-DD'),
+      moment(new Date(2021, 11, 6)).format('YYYY-MM-DD')
     ],
     // ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"]
     datasets: [{
       label: 'Car',
-      data: [],
+      data: [2,4,6,3,2,5],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(255, 99, 132, 0.2)'
@@ -63,7 +66,7 @@ const mulitline_chart = new Chart(multiline, {
     },
     {
       label: 'Bus',
-      data: [],
+      data: [2,3,4,2,1,2],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(54, 162, 235, 0.2)'
@@ -72,7 +75,7 @@ const mulitline_chart = new Chart(multiline, {
     },
     {
       // label: 'truck',
-      data: [],
+      data: [0,1,2,3,0,0],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(255, 206, 86, 0.2)'
@@ -82,7 +85,7 @@ const mulitline_chart = new Chart(multiline, {
       ,
     {
       // label: 'Rickshaw',
-      data: [],
+      data: [4,5,6,7,8,9],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(75, 192, 192, 0.2)'
@@ -91,7 +94,7 @@ const mulitline_chart = new Chart(multiline, {
     },
     {
       label: 'Bike',
-      data: [],
+      data: [0,0,0,1,2,4],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(153, 102, 255, 0.2)'
@@ -101,7 +104,7 @@ const mulitline_chart = new Chart(multiline, {
       ,
     {
       label: 'van',
-      data: [0],
+      data: [0,1,0,1,0,1],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(255, 159, 64, 0.2)'
@@ -146,10 +149,17 @@ var myChart = new Chart(index, {
 
   },
   data: {
-    // labels: ["2015-03-15T13:03:00Z", "2015-03-25T13:02:00Z", "2015-04-25T14:12:00Z"],
+    // labels: ["2021-11-9:03:00Z", "2015-03-25T13:02:00Z", "2015-04-25T14:12:00Z"],
     datasets: [{
       label: 'Live Data',
-      data: [],
+      data: [
+            { t: new Date("2021-11-8 13:1"), y: 12 },
+            { t: new Date("2021-11-8 13:2"), y: 21 },
+            { t: new Date("2021-11-8 13:3"), y: 32 },
+            { t: new Date("2021-11-8 13:4"), y: 12 },
+            { t: new Date("2021-11-8 13:5"), y: 21 },
+            { t: new Date("2021-11-8 13:6"), y: 32 }
+      ],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -192,7 +202,7 @@ var barChart = new Chart(bar, {
     labels: ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"],
     datasets: [{
       label: 'Bar Chart',
-      data: [12, 19, 3, 5, 3, 3],
+      data: [4,1,3,6,3,2],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -239,7 +249,7 @@ var pieChart = new Chart(pie, {
     labels: ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"],
     datasets: [{
       // label: 'Bar Chart',
-      data: [12, 19, 3, 5, 3, 3],
+      data: [4,1,3,6,3,2],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
