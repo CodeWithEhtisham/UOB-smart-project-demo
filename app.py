@@ -10,7 +10,55 @@ import pandas as pd
 from flask_socketio import SocketIO,emit
 import datetime as dt
 app = Flask(__name__)
+from databases import Database
+import asyncio
+
+def database():
+    return Database("sqlite:///database.db")
+
+
+async def insert_something(db: Database,data):
+    async with db.connection() as conn:
+        async with db.transaction():
+            await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(?,?,?,?)",data)
+            # await db.execute("insert into person (name) values (:name)", {"name": "testing..."})
+            print("last row id :",db.last_row_id())
+
+
+async def query_something(db: Database, n):
+    async with db.connection() as conn:
+        async with db.transaction():
+            row = await db.fetch_one("select :foo as foo", {"foo": "bar"})
+            print(f"{n} done")
+
+
+async def run(data):
+    async with database() as db:
+
+        # If this is commented out then the app runs successfully:
+        await insert_something(db,data)
+
+        # tasks = []
+        # for n in range(10):
+        #     tasks.append(asyncio.create_task(query_something(db, n)))
+
+        # print("Waiting...")
+        # await asyncio.gather(*tasks)
+        # print("Done")
+
+
 sio=SocketIO(app)
+
+
+
+def insertion(frame_id, tag, vehicle, date):
+    con = sqlite3.connect("database.db")
+    mycursor = con.cursor()
+    mycursor.execute("INSERT INTO data (frame_id, tag, vehicle, date) VALUES (?,?,?,?)", (frame_id, tag, vehicle, date))
+    con.commit()
+    con.close()
+
+
 
 @sio.on("connect")
 def connect():
@@ -27,16 +75,17 @@ def connect():
 #     image=json['image']
 @sio.on("main page socket")
 def vehicle_detection(json):
+    asyncio.run(run(("cam_loc","cam_paht","img_paht","abccd")))
     counts=json['counts']
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
     sio.emit('frame predict',json['image'],broadcast=True)
     sio.emit('index data',data={'indexchart':{
-                't':str(dt.datetime.now()),
+                't':json['datetime'],
                 'y':counts['total']
             },
             'data':[counts['cartotal'],counts['bustotal'],counts['trucktotal'],counts['rickshawtotal'],counts['biketotal'],counts['vantotal']],
-            'time':str(dt.datetime.now())
+            'time':json['datetime']
             },broadcast=True)
 
 @sio.on("frame get")

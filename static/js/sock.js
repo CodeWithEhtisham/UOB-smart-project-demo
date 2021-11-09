@@ -53,57 +53,68 @@ const mulitline_chart = new Chart(multiline, {
     ],
     // ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"]
     datasets: [{
-        label: 'Car',
-        data: [],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'red'
-      },
-      {
-        label: 'Bus',
-        data: [],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'green'
-      },
-      {
-        label: 'truck',
-        data: [],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'pink'
-      }
+      label: 'Car',
+      data: [],
+      borderWidth: 1,
+      fill: false,
+      borderColor: 'rgba(255, 99, 132, 0.2)'
+
+      // borderColor: 'red'
+    },
+    {
+      label: 'Bus',
+      data: [],
+      borderWidth: 1,
+      fill: false,
+      borderColor: 'rgba(54, 162, 235, 0.2)'
+
+      // borderColor: 'green'
+    },
+    {
+      // label: 'truck',
+      data: [],
+      borderWidth: 1,
+      fill: false,
+      borderColor: 'rgba(255, 206, 86, 0.2)'
+
+      // borderColor: 'pink'
+    }
       ,
-      {
-        label: 'Rickshaw',
-        data: [],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'blue'
-      },
-      {
-        label: 'Bike',
-        data: [],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'black'
-      }
+    {
+      // label: 'Rickshaw',
+      data: [],
+      borderWidth: 1,
+      fill: false,
+      borderColor: 'rgba(75, 192, 192, 0.2)'
+
+      // borderColor: 'blue'
+    },
+    {
+      label: 'Bike',
+      data: [],
+      borderWidth: 1,
+      fill: false,
+      borderColor: 'rgba(153, 102, 255, 0.2)'
+
+      // borderColor: 'black'
+    }
       ,
-      {
-        label: 'van',
-        data: [],
-        borderWidth: 1,
-        fill: false,
-        borderColor: 'yellow'
-      }
-    ]
+    {
+      label: 'van',
+      data: [0],
+      borderWidth: 1,
+      fill: false,
+      borderColor: 'rgba(255, 159, 64, 0.2)'
+      // borderColor: 'yellow'
+    }
+    ],
   },
   options: {
-    
+
     scales: {
       yAxes: [{
-      	ticks: {
-        	beginAtZero: true
+        ticks: {
+          beginAtZero: true
         }
       }]
     }
@@ -120,33 +131,25 @@ var myChart = new Chart(index, {
       xAxes: [{
         type: 'time',
       }]
+    }, scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
     }
-  //   scales: {
-  //     y: {
-  //         beginAtZero: true
-  //     }
-  // }
+    //   scales: {
+    //     y: {
+    //         beginAtZero: true
+    //     }
+    // }
 
   },
   data: {
     // labels: ["2015-03-15T13:03:00Z", "2015-03-25T13:02:00Z", "2015-04-25T14:12:00Z"],
     datasets: [{
       label: 'Live Data',
-      data: [
-        {
-        't': '2021-10-05 15:51:45.229885',
-        'y': 20
-      },
-      {
-        't': '2021-10-05 15:51:25.229885',
-        'y': 10
-      },
-      {
-        't': '2021-10-05 15:51:20.229885',
-        'y': 5
-      }
-    ]
-      ,
+      data: [],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -166,19 +169,19 @@ var myChart = new Chart(index, {
       borderWidth: 1
     }]
   },
-  options: {
-    
-    scales: {
-      yAxes: [{
-      	ticks: {
-        	beginAtZero: true
-        }
-      }]
-    }
-  }
   // options: {
-    
-// }
+
+  //   scales: {
+  //     yAxes: [{
+  //     	ticks: {
+  //       	beginAtZero: true
+  //       }
+  //     }]
+  //   }
+  // }
+  // options: {
+
+  // }
 });
 
 // BAR CHART CHARTJS
@@ -309,8 +312,8 @@ sio.on('index data', (data) => {
   // console.log(data['indexchart'])
   // console.log(bardata)
   myChart.data.datasets[0].data.push(data['indexchart'])
-  pieChart.data.datasets[0].data=data['data']
-  barChart.data.datasets[0].data=data['data']
+  pieChart.data.datasets[0].data = data['data']
+  barChart.data.datasets[0].data = data['data']
 
   for (var i = 0; i < data['data'].length; i++) {
     mulitline_chart.data.datasets[i].data.push(data['data'][i])
@@ -323,4 +326,11 @@ sio.on('index data', (data) => {
   barChart.update()
   pieChart.update()
   mulitline_chart.update()
+  if (mulitline_chart.data.labels > 30) {
+    for (var i = 0; i < data['data'].length; i++) {
+      mulitline_chart.data.datasets[i].data.shift()
+    }
+    mulitline_chart.data.labels.shift()
+    myChart.data.datasets[0].data.shift()
+  }
 });
