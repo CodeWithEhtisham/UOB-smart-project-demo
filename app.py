@@ -20,7 +20,7 @@ def database():
 async def insert_something(db: Database,data):
     async with db.connection() as conn:
         async with db.transaction():
-            await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(?,?,?,?)",data)
+            await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(:camera_id,:camera_loc,:capture_time,:image_path)",data)
             # await db.execute("insert into person (name) values (:name)", {"name": "testing..."})
             print("last row id :",db.last_row_id())
 
@@ -75,7 +75,12 @@ def connect():
 #     image=json['image']
 @sio.on("main page socket")
 def vehicle_detection(json):
-    asyncio.run(run(("cam_loc","cam_paht","img_paht","abccd")))
+    asyncio.run({
+        "camera_id":json['camera_id'],
+        "camera_loc":json['camera_loc'],
+        "capture_time":json['capture_time'],
+        "image_path":json['image_path']
+    })
     counts=json['counts']
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
