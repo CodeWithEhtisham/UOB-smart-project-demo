@@ -23,7 +23,8 @@ async def insert_something(db: Database,data):
             await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(:camera_id,:camera_loc,:capture_time,:image_path)",data[0])
             # await db.execute("insert into person (name) values (:name)", {"name": "testing..."})
             query = "SELECT * FROM data ORDER BY frame_id DESC LIMIT 1"
-            frame_id = await db.fetch_all(query=query)[0][0]
+            frame_id = await db.fetch_all(query=query)
+            frame_id=frame_id[0][0]
             print("+++++++++++++++++++++++++++++++++++++++++++++++++++")
             print(frame_id)
             for index,obj in enumerate(data[1]):
