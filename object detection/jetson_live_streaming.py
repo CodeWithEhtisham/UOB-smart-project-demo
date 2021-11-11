@@ -3,7 +3,7 @@ import cv2
 import time
 import base64
 sio = socketio.Client()
-cap=cv2.VideoCapture(0)
+cap=cv2.VideoCapture('b.dav')
 # cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')) # depends on fourcc available camera
 # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
@@ -13,7 +13,7 @@ cap=cv2.VideoCapture(0)
 def connect():
     print('connection established')
     print('message sent')
-    frame_rate = 20
+    frame_rate = 10
     prev = 0
     while True:
         
@@ -36,7 +36,7 @@ def connect():
 @sio.event
 def disconnect():
     print('disconnected from server')
-sio.connect('http://192.168.132.40:8000')
+sio.connect('http://192.168.18.202:8000')
 
 # sio.connect('http://192.168.18.253:8000')
 # sio.connect('http://143.110.179.46:4444')

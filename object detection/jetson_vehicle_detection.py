@@ -24,17 +24,17 @@ with open(r'D:\gil\demo\yolov4\obj.names','rt') as f:
     names=f.read().rstrip('\n').split('\n')
 fpsLimit = 1 # throttle limit
 startTime = time.time()
-cap = cv2.VideoCapture(r"D:\gil\demo\yolov4\road.mp4")
+cap = cv2.VideoCapture('b.dav')
 print("cap s")
 @sio.event
 def connect():
     while True:
-            print("frames")
-            ret,frame = cap.read()
+        print("frames")
+        ret,frame = cap.read()
         # print(type(frame))
         # frame=cv2.imread('download.jpg')
-        # nowTime = time.time()
-        # if (int(nowTime - startTime)) > fpsLimit:
+        nowTime = time.time()
+        if (int(nowTime - startTime)) > fpsLimit:
             classes,confidances,boxes=net.detect(frame,confThreshold=0.1,nmsThreshold=0.4)
             if type(classes)==type((1,1)):
                 continue
@@ -144,7 +144,7 @@ def disconnect():
 # sio.connect('http://127.0.0.1:8000')
 # =======
 print("connecting........")
-sio.connect('http://192.168.18.34:8000')
+sio.connect('http://192.168.18.202:8000')
 
 # sio.connect('http://192.168.132.40:8000')
 # sio.connect('http://192.168.18.253:4000')

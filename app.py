@@ -20,11 +20,17 @@ def database():
 async def insert_something(db: Database,data):
     async with db.connection() as conn:
         async with db.transaction():
-            await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(:camera_id,:camera_loc,:capture_time,:image_path)",data)
+            await db.execute("INSERT INTO data(camera_id,camera_loc,capture_time,image_path) VALUES(:camera_id,:camera_loc,:capture_time,:image_path)",data[0])
             # await db.execute("insert into person (name) values (:name)", {"name": "testing..."})
             query = "SELECT * FROM data ORDER BY frame_id DESC LIMIT 1"
-            rows = await db.fetch_all(query=query)
-            print('High Scores:', rows)
+            frame_id = await db.fetch_all(query=query)[0][0]
+            print("+++++++++++++++++++++++++++++++++++++++++++++++++++")
+            print(frame_id)
+            for index,obj in enumerate(data[1]):
+                data[1][index]['frame_id']=frame_id
+            print(data[1])
+
+            # print('High Scores:', rows)
             # print(db.fetch_one("SELECT * FROM data ORDER BY frame_id DESC LIMIT 1"))
 
 
@@ -79,12 +85,12 @@ def connect():
 #     image=json['image']
 @sio.on("main page socket")
 def vehicle_detection(json):
-    asyncio.run(run({
+    asyncio.run(run([{
         "camera_id":json['camera_id'],
         "camera_loc":json['camera_loc'],
         "capture_time":json['datetime'],
         "image_path":json['image_path']
-    }))
+    },json['results']]))
     counts=json['counts']
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
