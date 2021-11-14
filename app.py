@@ -61,12 +61,14 @@ def connect():
 #     image=json['image']
 @sio.on("main page socket")
 def vehicle_detection(json):
-    asyncio.run(run([{
+    d=[{
         "camera_id":json['camera_id'],
         "camera_loc":json['camera_loc'],
         "capture_time":json['datetime'],
         "image_path":json['image_path']
-    },json['results']]))
+    },json['results']]
+    print(d)
+    asyncio.run(run(d))
     counts=json['counts']
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
