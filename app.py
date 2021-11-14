@@ -25,20 +25,17 @@ async def insert_something(db: Database,data):
             # await db.execute("insert into person (name) values (:name)", {"name": "testing..."})
             query = "SELECT * FROM data ORDER BY frame_id DESC LIMIT 1"
             frame_id = await db.fetch_all(query=query)
-            frame_id=frame_id[0][0]
-            print("+++++++++++++++++++++++++++++++++++++++++++++++++++")
-            print(frame_id)
+            # print(frame_id[0][-1])
+            frame_id=frame_id[0][-1]
+            # print("+++++++++++++++++++++++++++++++++++++++++++++++++++")
+            # print(frame_id)
             for index,obj in enumerate(data[1]):
                 data[1][index]['frame_id']=frame_id
-            # {'label': 'Car', 'prob': '0.94', 'x': '306', 'y': '259', 'w': '27', 'h': '44', 'frame_id': '12345'}
-            print(data[1])
+            # # {'label': 'Car', 'prob': '0.94', 'x': '306', 'y': '259', 'w': '27', 'h': '44', 'frame_id': '12345'}
+            # print(data[1])
             await db.execute_many("INSERT INTO results(frame_id,label,prob,x,y,w,h) values(:frame_id,:label,:prob,:x,:y,:w,:h)",data[1])
             print("record added successfull")
-            query = "SELECT * FROM results ORDER BY frame_id DESC LIMIT 10"
-            frame_id = await db.fetch_all(query=query)
-            print("***********************************************************")
-            print(frame_id)
-            print("***********************************************************")
+
 
 async def run(data):
     async with database() as db:
@@ -50,36 +47,36 @@ async def run(data):
 def connect():
     print("client connected successful")
 
-    d=[{'camera_id': '12345', 'camera_loc': 'UOB', 'capture_time': '2021-11-14 23:32:19.335265', 'image_path': '2021-11-14 23:32:19.335265_uob.jpg'},
-     [{'label': 'Car', 'prob': '0.89', 'x': '229', 'y': '262', 'w': '32', 'h': '37'},
-      {'label': 'Car', 'prob': '0.85', 'x': '174', 'y': '257', 'w': '36', 'h': '48'},
-       {'label': 'Car', 'prob': '0.84', 'x': '212', 'y': '305', 'w': '41', 'h': '47'},
-        {'label': 'Car', 'prob': '0.76', 'x': '338', 'y': '179', 'w': '15', 'h': '14'},
-         {'label': 'Car', 'prob': '0.75', 'x': '139', 'y': '335', 'w': '58', 'h': '65'},
-          {'label': 'Car', 'prob': '0.66', 'x': '465', 'y': '228', 'w': '46', 'h': '25'},
-           {'label': 'Car', 'prob': '0.66', 'x': '369', 'y': '177', 'w': '27', 'h': '19'},
-            {'label': 'Car', 'prob': '0.61', 'x': '443', 'y': '217', 'w': '47', 'h': '29'},
-             {'label': 'Car', 'prob': '0.56', 'x': '214', 'y': '222', 'w': '26', 'h': '34'},
-              {'label': 'Car', 'prob': '0.56', 'x': '394', 'y': '193', 'w': '42', 'h': '29'},
-               {'label': 'Car', 'prob': '0.55', 'x': '420', 'y': '202', 'w': '41', 'h': '27'},
-                {'label': 'Car', 'prob': '0.48', 'x': '458', 'y': '478', 'w': '109', 'h': '97'},
-                 {'label': 'Car', 'prob': '0.46', 'x': '431', 'y': '209', 'w': '49', 'h': '29'},
-                  {'label': 'Car', 'prob': '0.43', 'x': '305', 'y': '158', 'w': '10', 'h': '9'},
-                   {'label': 'Car', 'prob': '0.38', 'x': '227', 'y': '188', 'w': '12', 'h': '13'},
-                    {'label': 'Car', 'prob': '0.35', 'x': '572', 'y': '285', 'w': '38', 'h': '42'},
-                     {'label': 'Car', 'prob': '0.20', 'x': '153', 'y': '231', 'w': '24', 'h': '32'},
-                      {'label': 'Bus', 'prob': '0.89', 'x': '479', 'y': '280', 'w': '160', 'h': '216'},
-                       {'label': 'Motorcycle', 'prob': '0.84', 'x': '89', 'y': '415', 'w': '34', 'h': '43'},
-                        {'label': 'Motorcycle', 'prob': '0.67', 'x': '403', 'y': '283', 'w': '20', 'h': '32'},
-                         {'label': 'Motorcycle', 'prob': '0.62', 'x': '439', 'y': '344', 'w': '26', 'h': '57'},
-                          {'label': 'Motorcycle', 'prob': '0.51', 'x': '141', 'y': '441', 'w': '29', 'h': '50'},
-                           {'label': 'Motorcycle', 'prob': '0.23', 'x': '360', 'y': '443', 'w': '35', 'h': '95'},
-                            {'label': 'Motorcycle', 'prob': '0.22', 'x': '240', 'y': '236', 'w': '11', 'h': '23'},
-                             {'label': 'Auto_rikshaw', 'prob': '0.75', 'x': '76', 'y': '301', 'w': '60', 'h': '56'},
-                              {'label': 'Auto_rikshaw', 'prob': '0.40', 'x': '46', 'y': '319', 'w': '45', 'h': '68'},
-                               {'label': 'Auto_rikshaw', 'prob': '0.23', 'x': '303', 'y': '177', 'w': '18', 'h': '35'},
-                                {'label': 'Auto_rikshaw', 'prob': '0.23', 'x': '14', 'y': '340', 'w': '53', 'h': '88'}]]
-    asyncio.run(run(d))
+    # d=[{'camera_id': '12345', 'camera_loc': 'UOB', 'capture_time': '2021-11-14 23:32:19.335265', 'image_path': '2021-11-14 23:32:19.335265_uob.jpg'},
+    #  [{'label': 'Car', 'prob': '0.89', 'x': '229', 'y': '262', 'w': '32', 'h': '37'},
+    #   {'label': 'Car', 'prob': '0.85', 'x': '174', 'y': '257', 'w': '36', 'h': '48'},
+    #    {'label': 'Car', 'prob': '0.84', 'x': '212', 'y': '305', 'w': '41', 'h': '47'},
+    #     {'label': 'Car', 'prob': '0.76', 'x': '338', 'y': '179', 'w': '15', 'h': '14'},
+    #      {'label': 'Car', 'prob': '0.75', 'x': '139', 'y': '335', 'w': '58', 'h': '65'},
+    #       {'label': 'Car', 'prob': '0.66', 'x': '465', 'y': '228', 'w': '46', 'h': '25'},
+    #        {'label': 'Car', 'prob': '0.66', 'x': '369', 'y': '177', 'w': '27', 'h': '19'},
+    #         {'label': 'Car', 'prob': '0.61', 'x': '443', 'y': '217', 'w': '47', 'h': '29'},
+    #          {'label': 'Car', 'prob': '0.56', 'x': '214', 'y': '222', 'w': '26', 'h': '34'},
+    #           {'label': 'Car', 'prob': '0.56', 'x': '394', 'y': '193', 'w': '42', 'h': '29'},
+    #            {'label': 'Car', 'prob': '0.55', 'x': '420', 'y': '202', 'w': '41', 'h': '27'},
+    #             {'label': 'Car', 'prob': '0.48', 'x': '458', 'y': '478', 'w': '109', 'h': '97'},
+    #              {'label': 'Car', 'prob': '0.46', 'x': '431', 'y': '209', 'w': '49', 'h': '29'},
+    #               {'label': 'Car', 'prob': '0.43', 'x': '305', 'y': '158', 'w': '10', 'h': '9'},
+    #                {'label': 'Car', 'prob': '0.38', 'x': '227', 'y': '188', 'w': '12', 'h': '13'},
+    #                 {'label': 'Car', 'prob': '0.35', 'x': '572', 'y': '285', 'w': '38', 'h': '42'},
+    #                  {'label': 'Car', 'prob': '0.20', 'x': '153', 'y': '231', 'w': '24', 'h': '32'},
+    #                   {'label': 'Bus', 'prob': '0.89', 'x': '479', 'y': '280', 'w': '160', 'h': '216'},
+    #                    {'label': 'Motorcycle', 'prob': '0.84', 'x': '89', 'y': '415', 'w': '34', 'h': '43'},
+    #                     {'label': 'Motorcycle', 'prob': '0.67', 'x': '403', 'y': '283', 'w': '20', 'h': '32'},
+    #                      {'label': 'Motorcycle', 'prob': '0.62', 'x': '439', 'y': '344', 'w': '26', 'h': '57'},
+    #                       {'label': 'Motorcycle', 'prob': '0.51', 'x': '141', 'y': '441', 'w': '29', 'h': '50'},
+    #                        {'label': 'Motorcycle', 'prob': '0.23', 'x': '360', 'y': '443', 'w': '35', 'h': '95'},
+    #                         {'label': 'Motorcycle', 'prob': '0.22', 'x': '240', 'y': '236', 'w': '11', 'h': '23'},
+    #                          {'label': 'Auto_rikshaw', 'prob': '0.75', 'x': '76', 'y': '301', 'w': '60', 'h': '56'},
+    #                           {'label': 'Auto_rikshaw', 'prob': '0.40', 'x': '46', 'y': '319', 'w': '45', 'h': '68'},
+    #                            {'label': 'Auto_rikshaw', 'prob': '0.23', 'x': '303', 'y': '177', 'w': '18', 'h': '35'},
+    #                             {'label': 'Auto_rikshaw', 'prob': '0.23', 'x': '14', 'y': '340', 'w': '53', 'h': '88'}]]
+    # asyncio.run(run(d))
     # emit("page data detection",
     # {"total":50},broadcast=True)
 
@@ -93,14 +90,12 @@ def connect():
 #     image=json['image']
 @sio.on("main page socket")
 def vehicle_detection(json):
-    d=[{
+    asyncio.run(run([{
         "camera_id":json['camera_id'],
         "camera_loc":json['camera_loc'],
         "capture_time":json['datetime'],
         "image_path":json['image_path']
-    },json['results']]
-    print(d)
-    asyncio.run(run(d))
+    },json['results']]))
     counts=json['counts']
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
