@@ -33,6 +33,10 @@ async def insert_something(db: Database,data):
             # {'label': 'Car', 'prob': '0.94', 'x': '306', 'y': '259', 'w': '27', 'h': '44', 'frame_id': '12345'}
             await db.execute_many("INSERT INTO results(frame_id,label,prob,x,y,w,h) values(:frame_id,:label,:prob,:x,:y,:w,:h)",data[1])
             print("record added successfull")
+            query = "SELECT * FROM results ORDER BY frame_id DESC LIMIT 1"
+            frame_id = await db.fetch_all(query=query)
+            print(frame_id)
+            print("***********************************************************")
 
 async def run(data):
     async with database() as db:
