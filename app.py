@@ -9,14 +9,15 @@ import numpy as np
 import pandas as pd
 from flask_socketio import SocketIO,emit
 import datetime as dt
-app = Flask(__name__)
 from databases import Database
 import asyncio
 
+app = Flask(__name__)
+sio=SocketIO(app)
+
 def database():
     return Database("sqlite:///database.db")
-
-
+    
 async def insert_something(db: Database,data):
     async with db.connection() as conn:
         async with db.transaction():
@@ -29,45 +30,19 @@ async def insert_something(db: Database,data):
             print(frame_id)
             for index,obj in enumerate(data[1]):
                 data[1][index]['frame_id']=frame_id
+            # {'label': 'Car', 'prob': '0.94', 'x': '306', 'y': '259', 'w': '27', 'h': '44', 'frame_id': '12345'}
             print(data[1])
-
-            # print('High Scores:', rows)
-            # print(db.fetch_one("SELECT * FROM data ORDER BY frame_id DESC LIMIT 1"))
-
-
-async def query_something(db: Database, n):
-    async with db.connection() as conn:
-        async with db.transaction():
-            # db.fetch_one("SELECT * FROM data ORDER BY frame_id DESC LIMIT 1")
-            row = await db.fetch_one("select :foo as foo", {"foo": "bar"})
-            print(f"{n} done")
-
+            await db.execute_many("INSERT INTO results(frame_id,label,prob,x,y,w,h) values(:frame_id,:label,:prob,:x,:y,:w,:h)",data[1])
+            print("record added successfull")
+            query = "SELECT * FROM results ORDER BY frame_id DESC LIMIT 10"
+            frame_id = await db.fetch_all(query=query)
+            print("***********************************************************")
+            print(frame_id)
+            print("***********************************************************")
 
 async def run(data):
     async with database() as db:
-
-        # If this is commented out then the app runs successfully:
         await insert_something(db,data)
-
-        # tasks = []
-        # for n in range(10):
-        #     tasks.append(asyncio.create_task(query_something(db, n)))
-
-        # print("Waiting...")
-        # await asyncio.gather(*tasks)
-        # print("Done")
-
-
-sio=SocketIO(app)
-
-
-
-def insertion(frame_id, tag, vehicle, date):
-    con = sqlite3.connect("database.db")
-    mycursor = con.cursor()
-    mycursor.execute("INSERT INTO data (frame_id, tag, vehicle, date) VALUES (?,?,?,?)", (frame_id, tag, vehicle, date))
-    con.commit()
-    con.close()
 
 
 
