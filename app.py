@@ -480,4 +480,4 @@ def login():
 
 if __name__ == "__main__":
     # app.run(host="127.0.0.1",threaded=True)
-    app.run(host="192.168.18.202",port=8000,threaded=True,debug=True) # home desktop
+    app.run(host="192.168.18.34",port=8000,threaded=True,debug=True) # home desktop

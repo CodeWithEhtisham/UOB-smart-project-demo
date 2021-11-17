@@ -45,6 +45,43 @@ const multiline = document.getElementById('multipleLineChart').getContext('2d');
 
 const mulitline_chart = new Chart(multiline, {
   type: 'line',
+  options: {
+    responsive: true,
+  //   legend: {
+  //     display: false
+  // },
+  // scales: {
+  //       yAxes: [{
+  //         ticks: {
+  //           beginAtZero: true
+  //         }
+  //       }]
+  //     }
+  //   },
+    scales: {
+      xAxes: [ {
+        type: 'time',
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Privious 5 Minutes record chart'
+        },
+        ticks: {
+          major: {
+            fontStyle: 'bold',
+            fontColor: '#FF0000'
+          }
+        }
+      } ],
+      yAxes: [ {
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Per Vehicle Count'
+        }
+      } ]
+    }
+  },
   data: {
     labels: [
       moment(new Date(2021, 11, 1)).format('YYYY-MM-DD'),
@@ -60,7 +97,7 @@ const mulitline_chart = new Chart(multiline, {
       data: [2,4,6,3,2,5],
       borderWidth: 1,
       fill: false,
-      borderColor: 'rgba(255, 99, 132, 0.2)'
+      borderColor: 'rgba(255, 99, 132, 0.5)'
 
       // borderColor: 'red'
     },
@@ -69,26 +106,26 @@ const mulitline_chart = new Chart(multiline, {
       data: [2,3,4,2,1,2],
       borderWidth: 1,
       fill: false,
-      borderColor: 'rgba(54, 162, 235, 0.2)'
+      borderColor: 'rgba(54, 162, 235, 0.5)'
 
       // borderColor: 'green'
     },
     {
-      // label: 'truck',
+      label: 'truck',
       data: [0,1,2,3,0,0],
       borderWidth: 1,
       fill: false,
-      borderColor: 'rgba(255, 206, 86, 0.2)'
+      borderColor: 'rgba(255, 206, 86, 0.5)'
 
       // borderColor: 'pink'
     }
       ,
     {
-      // label: 'Rickshaw',
+      label: 'Rickshaw',
       data: [4,5,6,7,8,9],
       borderWidth: 1,
       fill: false,
-      borderColor: 'rgba(75, 192, 192, 0.2)'
+      borderColor: 'rgba(75, 192, 192, 0.5)'
 
       // borderColor: 'blue'
     },
@@ -97,7 +134,7 @@ const mulitline_chart = new Chart(multiline, {
       data: [0,0,0,1,2,4],
       borderWidth: 1,
       fill: false,
-      borderColor: 'rgba(153, 102, 255, 0.2)'
+      borderColor: 'rgba(153, 102, 255, 0.5)'
 
       // borderColor: 'black'
     }
@@ -107,66 +144,92 @@ const mulitline_chart = new Chart(multiline, {
       data: [0,1,0,1,0,1],
       borderWidth: 1,
       fill: false,
-      borderColor: 'rgba(255, 159, 64, 0.2)'
+      borderColor: 'rgba(255, 159, 64, 0.5)'
       // borderColor: 'yellow'
     }
     ],
   },
-  options: {
+  // options: {
 
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  }
+  //  
 });
 // multi line chart end
-
 
 var index = document.getElementById("indexchart").getContext("2d");
 var myChart = new Chart(index, {
   type: 'line',
-  options: {
-    scales: {
-      xAxes: [{
-        type: 'time',
-      }]
-    }, scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-    //   scales: {
-    //     y: {
-    //         beginAtZero: true
-    //     }
-    // }
 
+  options: {
+    responsive: true,
+    legend: {
+      display: false
   },
+    scales: {
+      xAxes: [ {
+        type: 'time',
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Privious 5 Minutes data chart'
+        },
+        ticks: {
+          major: {
+            fontStyle: 'bold',
+            fontColor: '#FF0000'
+          }
+        }
+      } ],
+      yAxes: [ {
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Vehicle Count'
+        }
+      } ]
+    }
+  },
+  // options: {
+  //   scales: {
+  //     xAxes: [{
+  //       type: 'time',
+  //     }]
+    
+  //   }
+  //   ,
+  //   scales: {
+  //     y: {
+  //         beginAtZero: true
+  //     }
+  // }
+
+  // },
   data: {
-    // labels: ["2021-11-9:03:00Z", "2015-03-25T13:02:00Z", "2015-04-25T14:12:00Z"],
+    // labels: ["2015-03-15T13:03:00Z", "2015-03-25T13:02:00Z", "2015-04-25T14:12:00Z"],
     datasets: [{
-      label: 'Live Data',
+      // label: 'Live Data',
       data: [
-            { t: new Date("2021-11-8 13:1"), y: 12 },
-            { t: new Date("2021-11-8 13:2"), y: 21 },
-            { t: new Date("2021-11-8 13:3"), y: 32 },
-            { t: new Date("2021-11-8 13:4"), y: 12 },
-            { t: new Date("2021-11-8 13:5"), y: 21 },
-            { t: new Date("2021-11-8 13:6"), y: 32 }
-      ],
+        {
+        't': '2021-11-17:19:08:40',
+        'y': 3
+      }
+      // ,
+      // {
+      //   't': '2021-10-05 15:51:25.229885',
+      //   'y': 10
+      // },
+      // {
+      //   't': '2021-10-05 15:51:20.229885',
+      //   'y': 5
+      // }
+    ]
+      ,
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(255, 99, 132, 0.4)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
@@ -178,44 +241,108 @@ var myChart = new Chart(index, {
       ],
       borderWidth: 1
     }]
-  },
+  }
   // options: {
-
-  //   scales: {
-  //     yAxes: [{
-  //     	ticks: {
-  //       	beginAtZero: true
-  //       }
-  //     }]
-  //   }
-  // }
-  // options: {
-
-  // }
+    
+// }
 });
+
+// var index = document.getElementById("indexchart").getContext("2d");
+// var myChart = new Chart(index, {
+//   type: 'line',
+//   options: {
+//     scales: {
+//       xAxes: [{
+//         type: 'time',
+//       }]
+//     }, scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true
+//         }
+//       }]
+//     }
+//     //   scales: {
+//     //     y: {
+//     //         beginAtZero: true
+//     //     }
+//     // }
+
+//   },
+//   data: {
+//     // labels: ["2021-11-9:03:00Z", "2015-03-25T13:02:00Z", "2015-04-25T14:12:00Z"],
+//     datasets: [{
+//       label:"",
+//       data: [
+//             { t: new Date("2021-11-8:13:1"), y: 12 },
+//             { t: new Date("2021-11-8:13:2"), y: 21 },
+//             { t: new Date("2021-11-8:13:3"), y: 32 },
+//             { t: new Date("2021-11-8:13:4"), y: 12 },
+//             { t: new Date("2021-11-8:13:5"), y: 21 },
+//             { t: new Date("2021-11-8:13:6"), y: 32 }
+//       ],
+//       backgroundColor: [
+//         'rgba(255, 99, 132, 0.2)',
+//         'rgba(54, 162, 235, 0.2)',
+//         'rgba(255, 206, 86, 0.2)',
+//         'rgba(75, 192, 192, 0.2)',
+//         'rgba(153, 102, 255, 0.2)',
+//         'rgba(255, 159, 64, 0.2)'
+//       ],
+//       borderColor: [
+//         'rgba(255,99,132,1)',
+//         'rgba(54, 162, 235, 1)',
+//         'rgba(255, 206, 86, 1)',
+//         'rgba(75, 192, 192, 1)',
+//         'rgba(153, 102, 255, 1)',
+//         'rgba(255, 159, 64, 1)'
+//       ],
+//       borderWidth: 1
+//     }]
+//   },
+//   // options: {
+
+//   //   scales: {
+//   //     yAxes: [{
+//   //     	ticks: {
+//   //       	beginAtZero: true
+//   //       }
+//   //     }]
+//   //   }
+//   // }
+//   // options: {
+
+//   // }
+// });
 
 // BAR CHART CHARTJS
 var bar = document.getElementById("barchart");
 var barChart = new Chart(bar, {
   type: 'bar',
+  options:{
+    responsive:true,
+    legend: {
+      display: false
+  }
+  },
   data: {
     labels: ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"],
     datasets: [{
       label: 'Bar Chart',
       data: [4,1,3,6,3,2],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)',
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
@@ -251,18 +378,18 @@ var pieChart = new Chart(pie, {
       // label: 'Bar Chart',
       data: [4,1,3,6,3,2],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)',
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
