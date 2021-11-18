@@ -107,7 +107,7 @@ def connect():
             # print(frame)
             obj={
                 "image":frame,
-                "image_path":datetime.datetime.now().__str__()+'_uob.jpg',
+                "image_path":datetime.strftime(datetime.now(), "%Y-%m-%d:%H:%M:%S")+'_uob.jpg',
                 # "tag":tag,
                 "datetime":datetime.strftime(datetime.now(), "%Y-%m-%d:%H:%M:%S"),
                 "camera_id":"12345",
@@ -145,7 +145,7 @@ def disconnect():
 # sio.connect('http://127.0.0.1:8000')
 # =======
 print("connecting........")
-sio.connect('http://192.168.132.40:8000')
+sio.connect('http://192.168.18.34:8000')
 
 # sio.connect('http://192.168.132.40:8000')
 # sio.connect('http://192.168.18.253:4000')

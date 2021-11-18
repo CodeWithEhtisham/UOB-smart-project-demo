@@ -471,3 +471,25 @@ sio.on('index data', (data) => {
     myChart.data.datasets[0].data.shift()
   }
 });
+sio.on('page load', (data) => {
+  console.log(data)
+  // console.log("image data recieved website")
+  // console.log(data['indexchart'])
+  // console.log(bardata)
+  myChart.data.datasets[0].data=data['indexchart']
+  // pieChart.data.datasets[0].data = data['data']
+  // barChart.data.datasets[0].data = data['data']
+
+  for (var i = 0; i < data['multi'].length; i++) {
+    mulitline_chart.data.datasets[i].data=data['multi'][i]
+  }
+  mulitline_chart.data.labels=data['time']
+  // console.log(data['data'])
+  // console.log(barChart.data.datasets.data)
+  // console.log(myChart.data.datasets[0].data)
+  myChart.update()
+  // barChart.update()
+  // pieChart.update()
+  mulitline_chart.update()
+ 
+});

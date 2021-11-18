@@ -36,7 +36,7 @@ def connect():
 @sio.event
 def disconnect():
     print('disconnected from server')
-sio.connect('http://192.168.132.40:8000')
+sio.connect('http://192.168.18.34:8000')
 
 # sio.connect('http://192.168.18.253:8000')
 # sio.connect('http://143.110.179.46:4444')
