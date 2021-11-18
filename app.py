@@ -11,7 +11,7 @@ from flask_socketio import SocketIO,emit
 import datetime as dt
 from databases import Database
 import asyncio
-
+import time
 app = Flask(__name__)
 sio=SocketIO(app)
 
@@ -40,12 +40,67 @@ async def insert_something(db: Database,data):
 async def run(data):
     async with database() as db:
         await insert_something(db,data)
+async def fetch_record():
+    async with database() as db:
+        async with db.connection() as conn:
+            async with db.transaction():
+                print("record fetching")
+                # -- SELECT data.capture_time,data.image_path,results.label,data.frame_id from data join results ON data.frame_id=results.frame_id ORDER by data.frame_id desc LIMIT 100; 
+                # -- SELECT frame_id,label from results WHERE results.frame_id in (SELECT frame_id from data ORDER by data.frame_id DESC limit 3);
+                rows=await db.fetch_all('SELECT data.capture_time,results.label,data.frame_id from data join results ON data.frame_id=results.frame_id ORDER by data.frame_id desc LIMIT 50')
+                index={}
+                dic={
+                "cartotal":0,
+                "bustotal":0,
+                "trucktotal":0,
+                "rickshawtotal":0,
+                "biketotal":0,
+                "vantotal":0,
+                "total":0
 
+                }
+                times=[]
+                for i in rows:
+                    if i[0] not in index.keys():
+                        index[i[0]]=[i[1]]
+                    else:
+                        index[i[0]].append(i[1])
+                    times.append(i[0])
+                    # print(i[1])
+                    if i[1] =='Motorcycle' or i[1]=="Bicycle":
+                        dic['biketotal']+=1
+                        dic['total']+=1
+                    elif i[1]=='Auto_rikshaw':
+                        dic['rickshawtotal']+=1
+                        dic['total']+=1
+                    elif i[1]=='Bus':
+                        dic['bustotal']+=1
+                        dic['total']+=1
+                    elif i[1]=='Truck':
+                        dic['trucktotal']+=1
+                        dic['total']+=1
+                    elif i[1]=='Van':
+                        dic['vantotal']+=1
+                        dic['total']+=1
+                    else:
+                        dic['cartotal']+=1
+                        dic['total']+=1
+                    # print("type :",rows[0])
+                    # time.sleep(6)
+                    # ROWS=await db.fetch_all("SELECT * from data LEFT JOIN results ON data.frame_id=results.frame_id ORDER by data.frame_id desc limit 100")
+                    # print("rows",rows)
+                print(index)
+                time.sleep(10)
+                return {
+                    "counts":dic,
+                    "datetime":times
+                }
 
 # [{'camera_id': '12345', 'camera_loc': 'UOB', 'capture_time': '2021-11-14 23:32:26.713220', 'image_path': '2021-11-14 23:32:26.713220_uob.jpg'}, [{'label': 'Car', 'prob': '0.89', 'x': '213', 'y': '304', 'w': '40', 'h': '47'}, {'label': 'Car', 'prob': '0.88', 'x': '229', 'y': '261', 'w': '33', 'h': '37'}, {'label': 'Car', 'prob': '0.81', 'x': '174', 'y': '258', 'w': '36', 'h': '47'}, {'label': 'Car', 'prob': '0.76', 'x': '338', 'y': '179', 'w': '15', 'h': '14'}, {'label': 'Car', 'prob': '0.72', 'x': '140', 'y': '335', 'w': '58', 'h': '62'}, {'label': 'Car', 'prob': '0.69', 'x': '369', 'y': '178', 'w': '27', 'h': '19'}, {'label': 'Car', 'prob': '0.67', 'x': '465', 'y': '228', 'w': '46', 'h': '25'}, {'label': 'Car', 'prob': '0.62', 'x': '443', 'y': '217', 'w': '47', 'h': '29'}, {'label': 'Car', 'prob': '0.57', 'x': '394', 'y': '193', 'w': '42', 'h': '29'}, {'label': 'Car', 'prob': '0.57', 'x': '420', 'y': '202', 'w': '41', 'h': '27'}, {'label': 'Car', 'prob': '0.47', 'x': '431', 'y': '209', 'w': '49', 'h': '29'}, {'label': 'Car', 'prob': '0.45', 'x': '306', 'y': '158', 'w': '9', 'h': '9'}, {'label': 'Car', 'prob': '0.39', 'x': '227', 'y': '188', 'w': '12', 'h': '13'}, {'label': 'Car', 'prob': '0.39', 'x': '214', 'y': '221', 'w': '26', 'h': '37'}, {'label': 'Car', 'prob': '0.33', 'x': '572', 'y': '285', 'w': '38', 'h': '42'}, {'label': 'Car', 'prob': '0.24', 'x': '155', 'y': '231', 'w': '24', 'h': '30'}, {'label': 'Bus', 'prob': '0.91', 'x': '479', 'y': '282', 'w': '160', 'h': '212'}, {'label': 'Motorcycle', 'prob': '0.82', 'x': '91', 'y': '412', 'w': '32', 'h': '43'}, {'label': 'Motorcycle', 'prob': '0.74', 'x': '141', 'y': '437', 'w': '28', 'h': '52'}, {'label': 'Motorcycle', 'prob': '0.66', 'x': '403', 'y': '284', 'w': '21', 'h': '32'}, {'label': 'Motorcycle', 'prob': '0.37', 'x': '442', 'y': '347', 'w': '25', 'h': '55'}, {'label': 'Motorcycle', 'prob': '0.31', 'x': '162', 'y': '289', 'w': '26', 'h': '35'}, {'label': 'Motorcycle', 'prob': '0.25', 'x': '322', 'y': '220', 'w': '17', 'h': '18'}, {'label': 'Auto_rikshaw', 'prob': '0.79', 'x': '76', 'y': '302', 'w': '60', 'h': '55'}, {'label': 'Auto_rikshaw', 'prob': '0.44', 'x': '45', 'y': '320', 'w': '47', 'h': '67'}, {'label': 'Auto_rikshaw', 'prob': '0.36', 'x': '13', 'y': '341', 'w': '56', 'h': '84'}, {'label': 'Auto_rikshaw', 'prob': '0.26', 'x': '304', 'y': '178', 'w': '18', 'h': '35'}]]
 @sio.on("connect")
 def connect():
     print("client connected successful")
+    
 
     # d=[{'camera_id': '12345', 'camera_loc': 'UOB', 'capture_time': '2021-11-14 23:32:19.335265', 'image_path': '2021-11-14 23:32:19.335265_uob.jpg'},
     #  [{'label': 'Car', 'prob': '0.89', 'x': '229', 'y': '262', 'w': '32', 'h': '37'},
@@ -168,7 +223,7 @@ def fetchDataframe(limit=200):
 
         }
         for i in result:
-            # print(i["label"])
+            # print(i[1])
             if i[2] =='Motorcycle' or i[2]=="Bicycle":
                 dic['Bike']+=1
                 dic['total']+=1
@@ -299,6 +354,11 @@ def index():
 @app.route('/')
 def main():
     print('main manu uploaded.....')
+    rows=asyncio.run(fetch_record())
+
+    # print("sleeping....................")
+    # print(len(rows))
+    # time.sleep(10)
     return render_template("main.html")
 
 # @sio.

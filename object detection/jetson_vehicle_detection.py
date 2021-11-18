@@ -31,6 +31,7 @@ def connect():
     while True:
         print("frames")
         ret,frame = cap.read()
+        frame = frame[:, 280:]
         # print(type(frame))
         # frame=cv2.imread('download.jpg')
         nowTime = time.time()
