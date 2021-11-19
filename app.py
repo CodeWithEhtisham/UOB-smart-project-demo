@@ -165,6 +165,10 @@ def connect():
 # @sio.on("detection")
 # def detection(json):
 #     image=json['image']
+@sio.on('fetch main page data')
+def fetch_main_page_data():
+    asyncio.run(fetch_record())
+
 @sio.on("main page socket")
 def vehicle_detection(json):
     asyncio.run(run([{
@@ -371,8 +375,8 @@ def index():
     #     streams=gen(True)
     # flags=False
     # gen(False)
-    asyncio.run(fetch_record())
-    return render_template("index.html", jsondata=get_json())
+    # asyncio.run(fetch_record())
+    return render_template("index.html")
 
 @app.route('/')
 def main():
@@ -399,13 +403,8 @@ def main():
 @app.route("/history",methods=["GET","POST"])
 def history():
     print("history loading")
-    if request.method=="POST":
-        # print("post histoyr")
-        print("start datetime",request.form['start'])
-        return render_template("history.html",jsondata=get_json())
-    else:
-        print("get histoyr")
-        return render_template("history.html")
+    return render_template("history.html")
+    
         
 @app.route("/prediction",methods=["GET","POST"])
 def prediction():
@@ -413,7 +412,7 @@ def prediction():
     if request.method=="POST":
         # print("post prediction")
         # print("start datetime",request.form['start'])
-        return render_template("prediction.html",jsondata=get_json())
+        return render_template("prediction.html")
     else:
         print("get prediction")
         return render_template("prediction.html")

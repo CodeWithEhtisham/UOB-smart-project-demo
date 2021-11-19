@@ -84,17 +84,17 @@ const mulitline_chart = new Chart(multiline, {
   },
   data: {
     labels: [
-      moment(new Date(2021, 11, 1)).format('YYYY-MM-DD'),
-      moment(new Date(2021, 11, 2)).format('YYYY-MM-DD'),
-      moment(new Date(2021, 11, 3)).format('YYYY-MM-DD'),
-      moment(new Date(2021, 11, 4)).format('YYYY-MM-DD'),
-      moment(new Date(2021, 11, 5)).format('YYYY-MM-DD'),
-      moment(new Date(2021, 11, 6)).format('YYYY-MM-DD')
+      // moment(new Date(2021, 11, 1)).format('YYYY-MM-DD'),
+      // moment(new Date(2021, 11, 2)).format('YYYY-MM-DD'),
+      // moment(new Date(2021, 11, 3)).format('YYYY-MM-DD'),
+      // moment(new Date(2021, 11, 4)).format('YYYY-MM-DD'),
+      // moment(new Date(2021, 11, 5)).format('YYYY-MM-DD'),
+      // moment(new Date(2021, 11, 6)).format('YYYY-MM-DD')
     ],
     // ["Car", "Bus", 'Truck', "Rickshaw", "Bike", "Van"]
     datasets: [{
       label: 'Car',
-      data: [2,4,6,3,2,5],
+      data: [],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(255, 99, 132, 0.5)'
@@ -103,7 +103,7 @@ const mulitline_chart = new Chart(multiline, {
     },
     {
       label: 'Bus',
-      data: [2,3,4,2,1,2],
+      data: [],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(54, 162, 235, 0.5)'
@@ -112,7 +112,7 @@ const mulitline_chart = new Chart(multiline, {
     },
     {
       label: 'truck',
-      data: [0,1,2,3,0,0],
+      data: [],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(255, 206, 86, 0.5)'
@@ -122,7 +122,7 @@ const mulitline_chart = new Chart(multiline, {
       ,
     {
       label: 'Rickshaw',
-      data: [4,5,6,7,8,9],
+      data: [],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(75, 192, 192, 0.5)'
@@ -131,7 +131,7 @@ const mulitline_chart = new Chart(multiline, {
     },
     {
       label: 'Bike',
-      data: [0,0,0,1,2,4],
+      data: [],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(153, 102, 255, 0.5)'
@@ -141,7 +141,7 @@ const mulitline_chart = new Chart(multiline, {
       ,
     {
       label: 'van',
-      data: [0,1,0,1,0,1],
+      data: [],
       borderWidth: 1,
       fill: false,
       borderColor: 'rgba(255, 159, 64, 0.5)'
@@ -208,10 +208,7 @@ var myChart = new Chart(index, {
     datasets: [{
       // label: 'Live Data',
       data: [
-        {
-        't': '2021-11-17:19:08:40',
-        'y': 3
-      }
+        
       // ,
       // {
       //   't': '2021-10-05 15:51:25.229885',
@@ -431,7 +428,7 @@ const sio = io('http://' + document.domain + ':' + location.port);
 
 sio.on('connect', () => {
   console.log('connected clint js');
-  //   sio.emit('sum', {numbers: [1, 2]});
+    sio.emit('fetch main page data');
 });
 
 sio.on('disconnect', () => {
@@ -472,6 +469,7 @@ sio.on('index data', (data) => {
   }
 });
 sio.on('page load', (data) => {
+  console.log("data recieved 200")
   console.log(data)
   // console.log("image data recieved website")
   // console.log(data['indexchart'])
