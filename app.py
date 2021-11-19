@@ -63,9 +63,9 @@ async def fetch_record():
                 #             '2021-11-18:18:47:38': ['Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Motorcycle', 'Motorcycle', 'Motorcycle', 'Auto_rikshaw'],
                 #              '2021-11-18:18:47:31': ['Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Car', 'Motorcycle', 'Motorcycle', 'Motorcycle', 'Auto_rikshaw'],
                 #               '2021-11-18:18:47:24': ['Car', 'Car', 'Car', 'Car']}
-                print(rows)
+                rows.reverse()
                 index={}
-                for i in rows.reverse():
+                for i in rows:
                     if i[0] not in index.keys():
                         index[i[0]]=[i[1]]
                     else:
