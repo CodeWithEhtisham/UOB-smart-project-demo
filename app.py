@@ -14,6 +14,7 @@ from databases import Database
 import asyncio
 app = Flask(__name__)
 sio=SocketIO(app)
+picture_list=[]
 
 def database():
     return Database("sqlite:///database.db")
@@ -106,8 +107,10 @@ async def fetch_record(status=True,start=None,end=None):
                     print("history fetching")
                     # -- SELECT data.capture_time,data.image_path,results.label,data.frame_id from data join results ON data.frame_id=results.frame_id ORDER by data.frame_id desc LIMIT 100; 
                     # -- SELECT frame_id,label from results WHERE results.frame_id in (SELECT frame_id from data ORDER by data.frame_id DESC limit 3);
-                    rows=await db.fetch_all(f'SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN {start} AND {end} ) ')
+                    # print(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
+                    rows=await db.fetch_all(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
                     # rows.reverse()
+                    print(rows)
                     index={}
                     for i in rows:
                         if i[0] not in index.keys():
@@ -420,6 +423,7 @@ def line_plot(df):
 def history_search():
     start=datetime.strftime(datetime.strptime(request.form['start'], "%Y-%m-%dT%H:%M"), "%Y-%m-%d:%H:%M:%S") 
     end = datetime.strftime(datetime.strptime(request.form['end'], "%Y-%m-%dT%H:%M"), "%Y-%m-%d:%H:%M:%S") 
+    print(start,end)
     asyncio.run(fetch_record(status=False, start=start, end=end))
     # print("hello")
     return ('', 204)
