@@ -242,7 +242,7 @@ def vehicle_detection(json):
     },json['results']]))
     counts=json['counts']
     print("send image data")
-    asyncio.run(save_image(json['image_path',json['image']]))
+    asyncio.run(save_image(json['image_path'],json['image']))
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
 
