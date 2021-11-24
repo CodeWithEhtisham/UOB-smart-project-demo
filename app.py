@@ -110,7 +110,7 @@ async def fetch_record(status=True,start=None,end=None):
                     # print(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
                     rows=await db.fetch_all(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
                     # rows.reverse()
-                    print(rows)
+                    # print(rows)
                     index={}
                     for i in rows:
                         if i[0] not in index.keys():
@@ -170,6 +170,7 @@ async def save_image(filename,image):
     image=base64.b64decode(image)
     jpg_as_np = np.frombuffer(image, dtype=np.uint8)
     image_buffer = imdecode(jpg_as_np, flags=1)
+    print(f"static//detection images//{times}_{area}")
     imwrite(f"static//detection images//{times}_{area}",image_buffer)
 # [{'camera_id': '12345', 'camera_loc': 'UOB', 'capture_time': '2021-11-14 23:32:26.713220', 'image_path': '2021-11-14 23:32:26.713220_uob.jpg'}, [{'label': 'Car', 'prob': '0.89', 'x': '213', 'y': '304', 'w': '40', 'h': '47'}, {'label': 'Car', 'prob': '0.88', 'x': '229', 'y': '261', 'w': '33', 'h': '37'}, {'label': 'Car', 'prob': '0.81', 'x': '174', 'y': '258', 'w': '36', 'h': '47'}, {'label': 'Car', 'prob': '0.76', 'x': '338', 'y': '179', 'w': '15', 'h': '14'}, {'label': 'Car', 'prob': '0.72', 'x': '140', 'y': '335', 'w': '58', 'h': '62'}, {'label': 'Car', 'prob': '0.69', 'x': '369', 'y': '178', 'w': '27', 'h': '19'}, {'label': 'Car', 'prob': '0.67', 'x': '465', 'y': '228', 'w': '46', 'h': '25'}, {'label': 'Car', 'prob': '0.62', 'x': '443', 'y': '217', 'w': '47', 'h': '29'}, {'label': 'Car', 'prob': '0.57', 'x': '394', 'y': '193', 'w': '42', 'h': '29'}, {'label': 'Car', 'prob': '0.57', 'x': '420', 'y': '202', 'w': '41', 'h': '27'}, {'label': 'Car', 'prob': '0.47', 'x': '431', 'y': '209', 'w': '49', 'h': '29'}, {'label': 'Car', 'prob': '0.45', 'x': '306', 'y': '158', 'w': '9', 'h': '9'}, {'label': 'Car', 'prob': '0.39', 'x': '227', 'y': '188', 'w': '12', 'h': '13'}, {'label': 'Car', 'prob': '0.39', 'x': '214', 'y': '221', 'w': '26', 'h': '37'}, {'label': 'Car', 'prob': '0.33', 'x': '572', 'y': '285', 'w': '38', 'h': '42'}, {'label': 'Car', 'prob': '0.24', 'x': '155', 'y': '231', 'w': '24', 'h': '30'}, {'label': 'Bus', 'prob': '0.91', 'x': '479', 'y': '282', 'w': '160', 'h': '212'}, {'label': 'Motorcycle', 'prob': '0.82', 'x': '91', 'y': '412', 'w': '32', 'h': '43'}, {'label': 'Motorcycle', 'prob': '0.74', 'x': '141', 'y': '437', 'w': '28', 'h': '52'}, {'label': 'Motorcycle', 'prob': '0.66', 'x': '403', 'y': '284', 'w': '21', 'h': '32'}, {'label': 'Motorcycle', 'prob': '0.37', 'x': '442', 'y': '347', 'w': '25', 'h': '55'}, {'label': 'Motorcycle', 'prob': '0.31', 'x': '162', 'y': '289', 'w': '26', 'h': '35'}, {'label': 'Motorcycle', 'prob': '0.25', 'x': '322', 'y': '220', 'w': '17', 'h': '18'}, {'label': 'Auto_rikshaw', 'prob': '0.79', 'x': '76', 'y': '302', 'w': '60', 'h': '55'}, {'label': 'Auto_rikshaw', 'prob': '0.44', 'x': '45', 'y': '320', 'w': '47', 'h': '67'}, {'label': 'Auto_rikshaw', 'prob': '0.36', 'x': '13', 'y': '341', 'w': '56', 'h': '84'}, {'label': 'Auto_rikshaw', 'prob': '0.26', 'x': '304', 'y': '178', 'w': '18', 'h': '35'}]]
 
@@ -240,7 +241,8 @@ def vehicle_detection(json):
         "image_path":json['image_path']
     },json['results']]))
     counts=json['counts']
-    asyncio.run(save_image(json['image_path',json['image']]))
+    print("send image data")
+    asyncio.run(save_image(json['image_path'],json['image']))
     # """detection code here and save into database"""
     sio.emit('page data detection',counts,broadcast=True)
 
