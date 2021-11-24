@@ -145,7 +145,7 @@ def disconnect():
 # sio.connect('http://127.0.0.1:8000')
 # =======
 print("connecting........")
-sio.connect('http://192.168.18.202:8000')
+sio.connect('http://192.168.18.34:8000')
 
 # sio.connect('http://192.168.132.40:8000')
 # sio.connect('http://192.168.18.253:4000')

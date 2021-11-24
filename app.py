@@ -166,7 +166,7 @@ async def fetch_record(status=True,start=None,end=None):
 
 async def save_image(filename,image):
     times,area=filename.split('_')
-    times=datetime.strftime(datetime.strptime(times, "%Y-%m-%d-%H-%M-%S"), "%Y-%m-%d-%H-%M-%S")
+    times=datetime.strftime(datetime.strptime(times, "%Y-%m-%d:%H:%M:%S"), "%Y-%m-%d-%H-%M-%S")
     image=base64.b64decode(image)
     jpg_as_np = np.frombuffer(image, dtype=np.uint8)
     image_buffer = imdecode(jpg_as_np, flags=1)
