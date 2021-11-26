@@ -9,6 +9,7 @@ from cv2 import imdecode, imwrite
 import numpy as np
 import pandas as pd
 from flask_socketio import SocketIO,emit
+import os
 from datetime import datetime
 from databases import Database
 import asyncio
@@ -464,7 +465,13 @@ def send_result(response=None, error='', status=200):
 def history_picture():
     global start_time
     global end_time
-    return f"start {start_time}, end {end_time}:"
+    list_images=[]
+    start=datetime.strftime(datetime.strptime(start_time, "%Y-%m-%d:%H:%M:%S"), "%Y-%m-%d-%H-%M-%S")
+    end=datetime.strftime(datetime.strptime(end_time, "%Y-%m-%d:%H:%M:%S"), "%Y-%m-%d-%H-%M-%S")
+    for i in os.listdir(r"static\detection images"):
+        if start<=i.split('_')[0]<=end:
+            list_images.append(i)
+    return render_template("gellary.html",images=list_images)
 
 @app.route('/fetchdata', methods=["POST"])
 def get_json():
@@ -591,4 +598,4 @@ def login():
 
 if __name__ == "__main__":
     # app.run(host="127.0.0.1",threaded=True)
-    app.run(host="192.168.18.202",port=8000,threaded=True,debug=True) # home desktop
+    app.run(host="192.168.18.34",port=8000,threaded=True,debug=True) # home desktop
