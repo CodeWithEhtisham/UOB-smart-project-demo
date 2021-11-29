@@ -153,8 +153,8 @@ async def save_image(filename,image):
     image=base64.b64decode(image)
     jpg_as_np = np.frombuffer(image, dtype=np.uint8)
     image_buffer = imdecode(jpg_as_np, flags=1)
-    print(f"static//detection images//{times}_{area}")
-    imwrite(f"static//detection images//{times}_{area}",image_buffer)
+    # print(f"static//detection images//{times}_{area}")
+    imwrite(f"static/detection images/{times}_{area}",image_buffer)
 
 
 @sio.on("connect")
@@ -234,7 +234,7 @@ def history_picture():
     list_images=[]
     start=datetime.strftime(datetime.strptime(start_time, "%Y-%m-%d:%H:%M:%S"), "%Y-%m-%d-%H-%M-%S")
     end=datetime.strftime(datetime.strptime(end_time, "%Y-%m-%d:%H:%M:%S"), "%Y-%m-%d-%H-%M-%S")
-    for i in os.listdir(r"static\detection images"):
+    for i in os.listdir(r"static/detection images"):
         if start<=i.split('_')[0]<=end:
             list_images.append(i)
     return render_template("gellary.html",images=list_images)
