@@ -16,8 +16,6 @@ document.getElementById('card1-img').src ="data:image/png;base64,"+data ;
 
 });
 sio.on("page data detection", (data) =>{
-    // console.log(data['carcount'])
-    // document.getElementById("frames").src = "data:image/png;base64," + json['image'];
     document.getElementById("total").textContent=data['total']
     document.getElementById("carcount").textContent=data['cartotal']
     document.getElementById("buscount").textContent=data['bustotal']

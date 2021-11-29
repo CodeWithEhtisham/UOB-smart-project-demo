@@ -1,7 +1,5 @@
-pandas
 Flask
 numpy
-Pillow
 flask-socketio==5.1
 eventlet==0.30
 gunicorn

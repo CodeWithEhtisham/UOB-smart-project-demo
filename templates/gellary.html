@@ -43,44 +43,8 @@
               style="background-color:rgb(144,210,250); font-size: medium;">prediction</span>
           </a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="{{url_for('history_picture')}}" class="nav-link">
-            <span class="badge badge-warning "
-              style="background-color:rgb(144,210,250); font-size: medium;">Picture</span>
-          </a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <!-- <a href="#" class="nav-link">Contact</a> -->
-        </li>
+        
       </ul>
-      <form action="{{ url_for('history_search') }}" method="post">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                        class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <label for="startinterval">Start:</label>
-                <input type="datetime-local" id="start" name="start" required>
-                <label for="from"> </label>
-                <!-- <a href="{{ url_for('index') }}" class="nav-link">Home</a> -->
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <label for="endinterval">End:</label>
-                <input type="datetime-local" id="end" name="end" required>
-                <label for="to"> </label>
-
-                <!-- <a href="#" class="nav-link">Contact</a> -->
-            </li>
-            <li class="nav-item menu-open">
-                <!-- <label for="endinterval">End:</label> -->
-                <input type="submit" id="submit" name="submit"
-                    style="background-color: rgb(0,123,255); color: rgb(255, 255, 255); border-radius: 10%; opacity: 0.8;">
-
-                <!-- <a href="#" class="nav-link">Contact</a> -->
-            </li>
-        </ul>
-    </form>
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
@@ -328,47 +292,24 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row">
-            
-
                 {% for item in images %}
-
                 <div class="col-md-3" style="width: 400px; height: 400px;">
-                    <img src="static\detection images\{{item}}" >                
-
-                    
+                    <img src="static\detection images\{{item}}" >
                   </div>
-
-
-                <!-- <div class="col-md-4">
-                    <div class="card-body"></div>
-                </div>
-            </div> -->
                 {% endfor %}
-              
-
-            
-            
-
-            <!-- /.col -->
           </div>
 
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-
-
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
     </aside>
-    <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script> -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script> -->
   <!-- jQuery -->
   <script src="static/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
@@ -383,190 +324,7 @@
   <script src="static/plugins/flot/plugins/jquery.flot.pie.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="static/js/demo.js"></script>
-  <!-- Page specific script -->
-  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script src="/static/plugins/chart.js/Chart.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-  <script src="{{url_for('static', filename='js/sock.js')}}"></script>
-  <!-- <script>
 
-    // setInterval(function () {
-    //   var myimageelement = document.getElementById('myImage');
-    //   myimageelement.src = "/static/img/output.jpg?rand=" + Math.random();
-    // }, 5000)
-
-    function parsedate(y, m, d, h, mi, s) {
-      // var d = new Date()
-
-      var d = new Date(y, m, d, h, mi, s)
-      return d
-
-    }
-
-    window.onload = function () {
-      var line_plot = []
-      var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        title: {
-          text: "Traffic"
-        },
-        // axisX:{
-        //   // includeZero: true,
-        // 	// valueFormatString: "DD MMM"
-        // },
-        axisY: {
-          includeZero: true,
-          title: "Number of Vehicles"
-          // scaleBreaks: {
-          //   autoCalculate: true
-          // }
-        },
-        data: [{
-          type: "spline",
-          xValueFormatString: "dd hh mm ss",
-          // color: "#3c8dbc",
-          dataPoints: line_plot
-        }
-        ]
-      });
-      chart.render();
-      // chart.remove();
-      // chart.destroy();
-
-
-      var updatechart = function (year, m, d, h, mi, s, y, checkflag) {
-        if (line_plot.length == 0) {
-          checkflag = false
-        }
-        if (checkflag == false) {
-          console.log("false condition")
-          console.log(line_plot)
-
-          for (let i = 0; i < year.length; i++) {
-            line_plot.push({
-              x: parsedate(year[i], m[i], d[i], h[i], mi[i], s[i]), y: y[i]
-
-            })
-          }
-        }
-        else {
-          ln = year.length - 1
-          console.log("true condition")
-          console.log(line_plot)
-          line_plot.push({
-            x: parsedate(year[ln], m[ln], d[ln], h[ln], mi[ln], s[ln]), y: y[ln]
-
-          })
-
-        }
-        if (line_plot.length > 60) {
-          line_plot.shift();
-        }
-        // chart.clear();
-        chart.render();
-
-      }
-
-      setInterval(function () {
-        // var myimageelement = document.getElementById('myImage');
-        // myimageelement.src = "/static/img/output.jpg?rand=" + Math.random();
-
-
-
-        $.ajax(
-          {
-            type: "POST",
-            url: "/fetchdata",
-            success: function (respnse) {
-
-              $.plot('#bar-chart', [JSON.parse(respnse.bar_data)], {
-                grid: {
-                  borderWidth: 1,
-                  borderColor: '#f3f3f3',
-                  tickColor: '#f3f3f3'
-                },
-                series: {
-                  bars: {
-                    show: true, barWidth: 0.5, align: 'center',
-                  },
-                },
-                colors: ['#3c8dbc'],
-                xaxis: {
-                  ticks: [[1, 'Car'], [2, 'Bus'], [3, 'Bike'], [4, 'Van'], [5, 'Truck'], [6, "Rikshaw"]]
-                }
-              });
-              $.plot('#donut-chart', respnse.donut_data, {
-                series: {
-                  pie: {
-                    show: true,
-                    radius: 1,
-                    innerRadius: 0.5,
-                    label: {
-                      show: true,
-                      radius: 2.3 / 3,
-                      formatter: labelFormatter,
-                      threshold: 0.0
-                    }
-
-                  }
-                },
-                legend: {
-                  show: false
-                }
-              });
-              // $("count_check").html(respnse.count)
-              /*
-               * END DONUT CHART
-               */
-              // })
-
-
-              var y = respnse.year;
-
-              var m = respnse.month;
-              var d = respnse.day;
-              var h = respnse.hour;
-              var mi = respnse.minute;
-              var s = respnse.second;
-              var index = respnse.line_index_data;
-              // console.log(y)
-              checkflag = respnse.checkflag
-              updatechart(y, m, d, h, mi, s, index, checkflag);
-
-            },
-            error: function (error) {
-              console.log(error);
-            }
-          }
-        )
-      }
-        // <<<<<<< HEAD
-        , 4000
-        // =======
-        , 6000
-        // >>>>>>> 5b8cdf8d10fbab90423e46c5fb708c5606a0cc0d
-      );
-
-    }
-
-
-    /*
-     * Custom Label formatter
-     * ----------------------
-     */
-    function labelFormatter(label, series) {
-      return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-        + label
-        + '<br>'
-        + Math.round(series.percent) + '%</div>'
-    }
-
-
-
-
-
-
-  </script> -->
 </body>
 
 </html>

@@ -48,8 +48,11 @@
             <span class="badge badge-warning " style="background-color:rgb(144,210,250); font-size: medium;">Home</span>
           </a>
         </li>
+
         <li class="nav-item d-none d-sm-inline-block">
-          <!-- <a href="#" class="nav-link">Contact</a> -->
+          <a href="{{ url_for('history') }}" class="nav-link">
+            <span class="badge badge-warning " style="background-color:rgb(144,210,250); font-size: medium;">History</span>
+          </a>
         </li>
       </ul>
 
@@ -77,98 +80,7 @@
           </div>
         </li>
 
-        <!-- Messages Dropdown Menu -->
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-              Message Start
-              <div class="media">
-                <img src="static/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">Call me whenever you can...</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              Message End
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              Message Start
-              <div class="media">
-                <img src="static/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">I got your message bro</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              Message End
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              Message Start
-              <div class="media">
-                <img src="static/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">The subject goes here</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              Message End
-              
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-          </div>
-        </li> -->
-        <!-- Notifications Dropdown Menu -->
-        <!-- <li class="nav-item dropdown">
-          <a href="#">
-            <span class="badge badge-warning navbar-badge"
-              style="background-color:rgb(144,210,250); font-size: medium;">History</span>
-          </a>
-        </li> -->
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-          </div>
-        </li> -->
+        
         <li class="nav-item">
           <a class="nav-link" data-widget="fullscreen" href="#" role="button">
             <i class="fas fa-expand-arrows-alt"></i>
@@ -219,11 +131,6 @@
           <!-- Sidebar Menu -->
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-
-
               <li class="nav-item menu-open">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-chart-pie"></i>
@@ -259,10 +166,6 @@
                   </li>
                 </ul>
               </li>
-
-
-
-
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -281,8 +184,6 @@
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
-                <!-- <li class="breadcrumb-item active">Flot</li> -->
               </ol>
             </div>
           </div>
@@ -364,9 +265,6 @@
                         <td><span id="total"></span></td>
                       </tr>
                     </table>
-
-
-
                   </div>
                 </div>
                 <!-- /.card-body-->
@@ -411,38 +309,6 @@
 
   <script src="{{url_for('static', filename='js/sock_predict.js')}}"></script>
 
-
-  <!-- <script>
-    function ShowCurrentTime() {
-                var myimageelement = document.getElementById('myImage');
-      myimageelement.src = "/static/img/output.jpg?rand=" + Math.random();
-                $.ajax({
-                    type: "GET",
-                    url: "/fetchtable", // Change Default.aspx to your ASPX page name, and GetCurrentTime to your server-side WebMethod name
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: OnSuccess // OnSuccess method is called when AJAX request receives the data from the server
-                });
-            }
-
-            function OnSuccess(response) {
-                // The response will contain JSON object like {"d":"29.6.2014 13:21:47"},
-                // so the actual data is response.d
-                $("#car").text(JSON.parse(response.Car));
-                $("#bus").text(JSON.parse(response.Bus)); // Fill our SPAN label with the data. 
-                $("#truck").text(JSON.parse(response.Truck));
-                $("#bike").text(JSON.parse(response.Bike));
-                $("#van").text(JSON.parse(response.Van));
-
-                // $("#van").text(JSON.parse(response.Car));
-                $("#rikshaw").text(JSON.parse(response.rikshaw));
-                $("#total").text(JSON.parse(response.total));
-            }
-
-            $(function () {
-                window.setInterval(ShowCurrentTime, 7000);
-            });
-  // </script> -->
 </body>
 
 </html>
