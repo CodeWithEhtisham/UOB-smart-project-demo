@@ -8,7 +8,9 @@ from flask_socketio import SocketIO,emit
 import os
 from datetime import datetime
 from databases import Database
+import eventlet
 import asyncio
+eventlet.monkey_patch()
 app = Flask(__name__)
 sio=SocketIO(app)
 start_time,end_time=datetime.strftime(datetime.now(), "%Y-%m-%d:%H:%M:%S"),datetime.strftime(datetime.now(), "%Y-%m-%d:%H:%M:%S")
