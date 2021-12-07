@@ -34,11 +34,75 @@ async def run(data):
     async with database() as db:
         await insert_something(db,data)
 
-async def fetch_record(status=True,start=None,end=None):
+async def fetch_history(start,end):
     async with database() as db:
         async with db.connection() as conn:
             async with db.transaction():
-                if status:
+                    rows=await db.fetch_all(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
+                    index={}
+                    for i in rows:
+                        if i[0] not in index.keys():
+                            index[i[0]]=[i[1]]
+                        else:
+                            index[i[0]].append(i[1])
+                    index_data=[]
+                    times=list(index.keys())
+                    count=[[],[],[],[],[],[]]
+                    for i,j in index.items():
+                        index_data.append({
+                            't':i,
+                            'y':len(j)
+                        })
+                        car=0
+                        bus=0
+                        truck=0
+                        bike=0
+                        van=0
+                        rickshaw=0
+                        for k in j:
+                            if k =='Motorcycle' or k=="Bicycle":
+                                bike+=1
+                                # dic['total']+=1
+                            elif k=='Auto_rikshaw':
+                                rickshaw+=1
+                                # dic['rickshawtotal']+=1
+                                # dic['total']+=1
+                            elif k=='Bus':
+                                bus+=1
+                                # dic['total']+=1
+                            elif k=='Truck':
+                                truck+=1
+                                # dic['total']+=1
+                            elif k=='Van':
+                                van+=1
+                                # dic['total']+=1
+                            else:
+                                car+=1
+                                # dic['total']+=1
+                        count[0].append(car)
+                        count[1].append(bus)
+                        count[2].append(truck)
+                        count[3].append(rickshaw)
+                        count[4].append(bike)
+                        count[5].append(van)                
+                        
+                    # sio.emit('page load',{
+                    #     'indexchart':index_data,
+                    #     "time":times,
+                    #     "multi":count
+                    #     },broadcast=True)
+                    print('history called')
+                    sio.emit('history load',{
+                        'indexchart':index_data,
+                        "time":times,
+                        "multi":count
+                        },broadcast=True)
+
+async def fetch_record():
+    async with database() as db:
+        async with db.connection() as conn:
+            async with db.transaction():
+                # if status:
                     rows=await db.fetch_all('SELECT data.capture_time,results.label,data.frame_id from data join results ON data.frame_id=results.frame_id ORDER by data.frame_id desc LIMIT 500')
                     rows.reverse()
                     index={}
@@ -93,67 +157,7 @@ async def fetch_record(status=True,start=None,end=None):
                         "time":times,
                         "multi":count
                         },broadcast=True)
-                else:
-                    rows=await db.fetch_all(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
-
-                    index={}
-                    for i in rows:
-                        if i[0] not in index.keys():
-                            index[i[0]]=[i[1]]
-                        else:
-                            index[i[0]].append(i[1])
-                    index_data=[]
-                    times=list(index.keys())
-                    count=[[],[],[],[],[],[]]
-                    for i,j in index.items():
-                        index_data.append({
-                            't':i,
-                            'y':len(j)
-                        })
-                        car=0
-                        bus=0
-                        truck=0
-                        bike=0
-                        van=0
-                        rickshaw=0
-                        for k in j:
-                            if k =='Motorcycle' or k=="Bicycle":
-                                bike+=1
-                                # dic['total']+=1
-                            elif k=='Auto_rikshaw':
-                                rickshaw+=1
-                                # dic['rickshawtotal']+=1
-                                # dic['total']+=1
-                            elif k=='Bus':
-                                bus+=1
-                                # dic['total']+=1
-                            elif k=='Truck':
-                                truck+=1
-                                # dic['total']+=1
-                            elif k=='Van':
-                                van+=1
-                                # dic['total']+=1
-                            else:
-                                car+=1
-                                # dic['total']+=1
-                        count[0].append(car)
-                        count[1].append(bus)
-                        count[2].append(truck)
-                        count[3].append(rickshaw)
-                        count[4].append(bike)
-                        count[5].append(van)                
-                        
-                    # sio.emit('page load',{
-                    #     'indexchart':index_data,
-                    #     "time":times,
-                    #     "multi":count
-                    #     },broadcast=True)
-                    print('else called')
-                    sio.emit('history load',{
-                        'indexchart':index_data,
-                        "time":times,
-                        "multi":count
-                        },broadcast=True)
+                    
 
 async def save_image(filename,image):
     times,area=filename.split('_')
@@ -209,7 +213,7 @@ def history_search():
     global end_time
     start_time=datetime.strftime(datetime.strptime(request.form['start'], "%Y-%m-%dT%H:%M"), "%Y-%m-%d:%H:%M:%S") 
     end_time = datetime.strftime(datetime.strptime(request.form['end'], "%Y-%m-%dT%H:%M"), "%Y-%m-%d:%H:%M:%S") 
-    asyncio.run(fetch_record(status=False, start=start_time, end=end_time))
+    asyncio.run(fetch_history(start=start_time, end=end_time))
     return ('', 204)
 
 @app.route("/home", methods=['GET', 'POST'])
