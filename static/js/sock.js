@@ -1,5 +1,5 @@
 
-const multiline = document.getElementById('multipleLineChart').getContext('2d');
+const multiline = document.getElementById('multipleLineChart');
 
 const mulitline_chart = new Chart(multiline, {
   type: 'line',
@@ -97,7 +97,7 @@ const mulitline_chart = new Chart(multiline, {
 });
 // multi line chart end
 
-var index = document.getElementById("indexchart").getContext("2d");
+var index = document.getElementById("indexchart");
 var myChart = new Chart(index, {
   type: 'line',
 
@@ -316,6 +316,20 @@ sio.on('index data', (data) => {
 });
 
 sio.on('page load', (data) => {
+  console.log("data recieved 200")
+  console.log(data)
+  myChart.data.datasets[0].data=data['indexchart']
+
+  for (var i = 0; i < data['multi'].length; i++) {
+    mulitline_chart.data.datasets[i].data=data['multi'][i]
+  }
+  mulitline_chart.data.labels=data['time']
+  myChart.update()
+  mulitline_chart.update()
+ 
+});
+
+sio.on('history load', (data) => {
   console.log("data recieved 200")
   console.log(data)
   myChart.data.datasets[0].data=data['indexchart']

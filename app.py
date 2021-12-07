@@ -149,7 +149,7 @@ async def fetch_record(status=True,start=None,end=None):
                     #     "multi":count
                     #     },broadcast=True)
                     print('else called')
-                    sio.emit('page load',{
+                    sio.emit('history load',{
                         'indexchart':index_data,
                         "time":times,
                         "multi":count
@@ -248,4 +248,4 @@ def history_picture():
     return render_template("gellary.html",images=list_images)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",port=4000,threaded=True,debug=True) # home desktop
+    app.run(threaded=True,debug=True) # home desktop
