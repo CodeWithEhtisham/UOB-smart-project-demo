@@ -143,6 +143,12 @@ async def fetch_record(status=True,start=None,end=None):
                         count[4].append(bike)
                         count[5].append(van)                
                         
+                    # sio.emit('page load',{
+                    #     'indexchart':index_data,
+                    #     "time":times,
+                    #     "multi":count
+                    #     },broadcast=True)
+                    print('else called')
                     sio.emit('page load',{
                         'indexchart':index_data,
                         "time":times,
