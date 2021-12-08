@@ -92,7 +92,7 @@ async def fetch_history(start,end):
                     #     "multi":count
                     #     },broadcast=True)
                     print('history called')
-                    sio.emit('history load',{
+                    sio.emit('page load',{
                         'indexchart':index_data,
                         "time":times,
                         "multi":count

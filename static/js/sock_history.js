@@ -300,17 +300,3 @@ sio.on('page load', (data) => {
   mulitline_chart.update()
  
 });
-
-sio.on('history load', (data) => {
-  console.log("history data recieved");
-  console.log(data)
-  myChart.data.datasets[0].data=data['indexchart']
-
-  for (var i = 0; i < data['multi'].length; i++) {
-    mulitline_chart.data.datasets[i].data=data['multi'][i]
-  }
-  mulitline_chart.data.labels=data['time']
-  myChart.update()
-  mulitline_chart.update()
- 
-});
