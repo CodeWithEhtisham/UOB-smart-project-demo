@@ -93,7 +93,7 @@ async def fetch_record(status=True,start=None,end=None):
                         "time":times,
                         "multi":count
                         },broadcast=True)
-                else:
+                elif status==False:
                     rows=await db.fetch_all(f"SELECT data.capture_time,results.label,data.frame_id from data join results on data.frame_id=results.frame_id  where data.frame_id in (SELECT frame_id from data WHERE capture_time BETWEEN '{start}' AND '{end}')")
 
                     index={}
@@ -203,6 +203,7 @@ def history_search():
     global end_time
     start_time=datetime.strftime(datetime.strptime(request.form['start'], "%Y-%m-%dT%H:%M"), "%Y-%m-%d:%H:%M:%S") 
     end_time = datetime.strftime(datetime.strptime(request.form['end'], "%Y-%m-%dT%H:%M"), "%Y-%m-%d:%H:%M:%S") 
+
     asyncio.run(fetch_record(status=False, start=start_time, end=end_time))
     return ('', 204)
 
