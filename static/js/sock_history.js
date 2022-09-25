@@ -287,50 +287,8 @@ sio.on('disconnect', () => {
   console.log('disconnected');
 });
 
-sio.on("frame", (data) => {
-  console.log("frame recieved")
-  document.getElementById("frames").src = "data:image/png;base64," + data;
-
-});
-
-sio.on('index data', (data) => {
-  myChart.data.datasets[0].data.push(data['indexchart'])
-  pieChart.data.datasets[0].data = data['data']
-  barChart.data.datasets[0].data = data['data']
-
-  for (var i = 0; i < data['data'].length; i++) {
-    mulitline_chart.data.datasets[i].data.push(data['data'][i])
-  }
-  mulitline_chart.data.labels.push(data['time'])
-  myChart.update()
-  barChart.update()
-  pieChart.update()
-  mulitline_chart.update()
-  if (mulitline_chart.data.labels > 30) {
-    for (var i = 0; i < data['data'].length; i++) {
-      mulitline_chart.data.datasets[i].data.shift()
-    }
-    mulitline_chart.data.labels.shift()
-    myChart.data.datasets[0].data.shift()
-  }
-});
-
 sio.on('page load', (data) => {
-  console.log("data recieved 200")
-  console.log(data)
-  myChart.data.datasets[0].data=data['indexchart']
-
-  for (var i = 0; i < data['multi'].length; i++) {
-    mulitline_chart.data.datasets[i].data=data['multi'][i]
-  }
-  mulitline_chart.data.labels=data['time']
-  myChart.update()
-  mulitline_chart.update()
- 
-});
-
-sio.on('history load', (data) => {
-  console.log("data recieved 200")
+  console.log("start data recieved");   
   console.log(data)
   myChart.data.datasets[0].data=data['indexchart']
 

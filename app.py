@@ -148,7 +148,7 @@ async def fetch_record(status=True,start=None,end=None):
                         "time":times,
                         "multi":count
                         },broadcast=True)
-
+                    
 async def save_image(filename,image):
     times,area=filename.split('_')
     times=datetime.strftime(datetime.strptime(times, "%Y-%m-%d:%H:%M:%S"), "%Y-%m-%d-%H-%M-%S")
