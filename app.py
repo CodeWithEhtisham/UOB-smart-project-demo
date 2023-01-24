@@ -243,4 +243,5 @@ def history_picture():
     return render_template("gellary.html",images=list_images)
 
 if __name__ == "__main__":
+    app.run(threaded=True,debug=True,host='0.0.0.0',port=8000) # home desktop
     app.run(host="0.0.0.0",port=4000,threaded=True,debug=True) # home desktop

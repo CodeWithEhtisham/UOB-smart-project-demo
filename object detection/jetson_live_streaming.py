@@ -3,7 +3,7 @@ import cv2
 import time
 import base64
 sio = socketio.Client()
-cap=cv2.VideoCapture(0)
+cap=cv2.VideoCapture("b.dav")
 @sio.event
 def connect():
     print('connection established')
@@ -14,6 +14,7 @@ def connect():
         time_elapsed = time.time() - prev
         ret,frame=cap.read()
         if not ret:
+            print("Can't receive frame (stream end?). Exiting ...")
             break
         frame=cv2.resize(frame,(400,400))
         print(frame.shape)
@@ -25,5 +26,5 @@ def connect():
 @sio.event
 def disconnect():
     print('disconnected from server')
-sio.connect('http://192.168.18.34:8000')
+sio.connect('http://143.110.179.46:5000/')
 sio.wait()

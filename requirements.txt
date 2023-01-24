@@ -3,6 +3,6 @@ numpy
 flask-socketio==5.1
 eventlet==0.31.0
 gunicorn
-opencv-python
+opencv-python==4.5.2.52
 aiosqlite
 databases
